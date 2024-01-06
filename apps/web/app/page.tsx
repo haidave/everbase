@@ -29,18 +29,18 @@ function Gradient({
 
 const LINKS = [
   {
-    title: "Docs",
-    href: "https://turbo.build/repo/docs",
+    title: "App",
+    href: "https://turbo.build/repo/app",
     description: "Find in-depth information about Turborepo features and API.",
   },
   {
     title: "Learn",
-    href: "https://turbo.build/repo/docs/handbook",
+    href: "https://turbo.build/repo/app/handbook",
     description: "Learn more about monorepos with our handbook.",
   },
   {
     title: "Templates",
-    href: "https://turbo.build/repo/docs/getting-started/from-example",
+    href: "https://turbo.build/repo/app/getting-started/from-example",
     description: "Choose from over 15 examples and deploy with a single click.",
   },
   {

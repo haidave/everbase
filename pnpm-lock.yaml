@@ -7,10 +7,10 @@ settings:
 importers:
   .:
     devDependencies:
-      "@repo/eslint-config":
+      "@everbase/eslint-config":
         specifier: workspace:*
         version: link:packages/eslint-config
-      "@repo/typescript-config":
+      "@everbase/typescript-config":
         specifier: workspace:*
         version: link:packages/typescript-config
       prettier:
@@ -22,7 +22,7 @@ importers:
 
   apps/app:
     dependencies:
-      "@repo/ui":
+      "@everbase/ui":
         specifier: workspace:*
         version: link:../../packages/ui
       next:
@@ -38,10 +38,10 @@ importers:
       "@next/eslint-plugin-next":
         specifier: ^14.0.4
         version: 14.0.4
-      "@repo/eslint-config":
+      "@everbase/eslint-config":
         specifier: workspace:*
         version: link:../../packages/eslint-config
-      "@repo/typescript-config":
+      "@everbase/typescript-config":
         specifier: workspace:*
         version: link:../../packages/typescript-config
       "@types/eslint":
@@ -65,7 +65,7 @@ importers:
 
   apps/web:
     dependencies:
-      "@repo/ui":
+      "@everbase/ui":
         specifier: workspace:*
         version: link:../../packages/ui
       next:
@@ -81,10 +81,10 @@ importers:
       "@next/eslint-plugin-next":
         specifier: ^14.0.4
         version: 14.0.4
-      "@repo/eslint-config":
+      "@everbase/eslint-config":
         specifier: workspace:*
         version: link:../../packages/eslint-config
-      "@repo/typescript-config":
+      "@everbase/typescript-config":
         specifier: workspace:*
         version: link:../../packages/typescript-config
       "@types/eslint":
@@ -134,10 +134,10 @@ importers:
 
   packages/ui:
     devDependencies:
-      "@repo/eslint-config":
+      "@everbase/eslint-config":
         specifier: workspace:*
         version: link:../eslint-config
-      "@repo/typescript-config":
+      "@everbase/typescript-config":
         specifier: workspace:*
         version: link:../typescript-config
       "@turbo/gen":

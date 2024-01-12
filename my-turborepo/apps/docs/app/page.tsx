@@ -29,18 +29,18 @@ function Gradient({
 
 const LINKS = [
   {
-    title: "App",
-    href: "https://turbo.build/repo/app",
+    title: "Docs",
+    href: "https://turbo.build/repo/docs",
     description: "Find in-depth information about Turborepo features and API.",
   },
   {
     title: "Learn",
-    href: "https://turbo.build/repo/app/handbook",
+    href: "https://turbo.build/repo/docs/handbook",
     description: "Learn more about monorepos with our handbook.",
   },
   {
     title: "Templates",
-    href: "https://turbo.build/repo/app/getting-started/from-example",
+    href: "https://turbo.build/repo/docs/getting-started/from-example",
     description: "Choose from over 15 examples and deploy with a single click.",
   },
   {
@@ -57,7 +57,7 @@ export default function Page(): JSX.Element {
       <div className={styles.description}>
         <p>
           examples/basic&nbsp;
-          <Code className={styles.code}>web</Code>
+          <Code className={styles.code}>docs</Code>
         </p>
         <div>
           <a
@@ -78,7 +78,7 @@ export default function Page(): JSX.Element {
         </div>
       </div>
 
-      <Button appName="web" className={styles.button}>
+      <Button appName="docs" className={styles.button}>
         Click me!
       </Button>
 
@@ -87,7 +87,7 @@ export default function Page(): JSX.Element {
           <div className={styles.logos}>
             <div className={styles.circles}>
               <Image
-                alt=""
+                alt="Turborepo"
                 height={614}
                 src="circles.svg"
                 width={614}
@@ -100,7 +100,7 @@ export default function Page(): JSX.Element {
 
             <div className={styles.logo}>
               <Image
-                alt="Turborepo"
+                alt=""
                 height={120}
                 priority
                 src="turborepo.svg"

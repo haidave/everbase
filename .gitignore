@@ -6,6 +6,7 @@ node_modules
 # next.js
 apps/app/.next
 apps/web/.next
+apps/docs/.next
 
 # production
 /build

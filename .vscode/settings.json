@@ -1,0 +1,21 @@
+{
+  // Custom Application window title ❤️
+  "window.title": "${dirty} ${activeEditorShort} ${separator} ${rootName}",
+  // On save actions and formatting
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  // Hide unnecessary filer/folders in the tree
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/*.log": true,
+    ".eslintcache": true,
+    "tsconfig.tsbuildinfo": true
+  },
+  // Recommended typescript plugin from Next.js
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

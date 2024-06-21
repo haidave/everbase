@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS Variables */
+@layer base {
+  :root {
+    /* App Backgrounds */
+    --bg-base: #fcfcfc;
+    --bg-subtle: #f9f9f9;
+
+    /* Component Background */
+    --bg-primary: #f0f0f0;
+    --bg-primary-hover: #e8e8e8;
+    --bg-primary-active: #e0e0e0;
+
+    --bg-primary-reverse: #222222;
+    --bg-primary-reverse-hover: #2a2a2a;
+    --bg-primary-reverse-active: #313131;
+
+    /* Borders */
+    --border-line: #d9d9d9;
+    --border-primary: #cecece;
+    --border-primary-hover: #bbbbbb;
+
+    /* Solid Background */
+    --bg-solid: #8d8d8d;
+    --bg-solid-hover: #838383;
+
+    /* Text */
+    --text-primary: #202020;
+    --text-primary-reverse: #eeeeee;
+    --text-secondary: #646464;
+
+    /* Box Shadow */
+    --shadow-focus: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--text-primary);
+
+    /* Height */
+    --header-height: 4rem;
+  }
+
+  .dark {
+    /* App Backgrounds */
+    --bg-base: #111111;
+    --bg-subtle: #191919;
+
+    /* Component Background */
+    --bg-primary: #222222;
+    --bg-primary-hover: #2a2a2a;
+    --bg-primary-active: #313131;
+
+    --bg-primary-reverse: #f0f0f0;
+    --bg-primary-reverse-hover: #e8e8e8;
+    --bg-primary-reverse-active: #e0e0e0;
+
+    /* Borders */
+    --border-line: #3a3a3a;
+    --border-primary: #484848;
+    --border-primary-hover: #606060;
+
+    /* Solid Background */
+    --bg-solid: #6e6e6e;
+    --bg-solid-hover: #7b7b7b;
+
+    /* Text */
+    --text-primary: #eeeeee;
+    --text-primary-reverse: #202020;
+    --text-secondary: #b4b4b4;
+    --text-tertiary: #7b7b7b;
+
+    --bg-scroll-thumb: #333333;
+    --shadow-focus: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--text-primary);
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-gradient-to-br from-black via-black via-20% to-black/30 bg-clip-text text-transparent dark:from-white dark:via-white dark:to-white/30;
+  }
+}
+
+/* Custom CSS Reset from https://www.joshwcomeau.com/css/custom-css-reset/ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--border-primary);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  /* https://www.joshwcomeau.com/css/custom-css-reset/#digit-tweaking-line-height */
+  line-height: calc(1em + 0.5rem);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
+}
+
+button {
+  padding: 0;
+  border-width: 0;
+  background: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+/* TODO: improve it because of code block */
+/* ::selection {
+  background-color: var(--bg-primary-hover);
+  color: var(--text-primary);
+} */
+
+/* Show Line Numbers in Code */
+code {
+  counter-reset: line;
+}
+
+code > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+
+  display: inline-block;
+  width: 1rem;
+  margin-right: 2rem;
+  text-align: right;
+  color: var(--border-primary);
+}

@@ -1,7 +1,7 @@
 import { ROUTES } from '@/config/routes'
 import { Link } from '@/modules/design-system/components/link'
 
-import { CommandMenu } from '../command-menu/command-menu'
+import { Button } from '../button'
 import { ThemeSwitcher } from '../theme-switcher'
 import { GithubButtonLink } from './parts/github-button-link'
 
@@ -17,19 +17,28 @@ const Header = () => {
                   <span className="text-gradient font-logo text-base font-medium">everbase</span>
                 </Link>
               </li>
+              <li>
+                <Link href={ROUTES.dashboard}>
+                  <span className="text-sm text-secondary transition-colors duration-150 hover:text-primary">
+                    Dashboard
+                  </span>
+                </Link>
+              </li>
             </ul>
           </nav>
 
           <nav>
             <ul className="flex items-center">
-              <li>
-                <CommandMenu />
-              </li>
-              <li className="ml-4">
+              <li className="mr-2">
                 <GithubButtonLink />
               </li>
-              <li className="ml-2">
+              <li className="mr-4">
                 <ThemeSwitcher />
+              </li>
+              <li>
+                <Button asChild>
+                  <Link href={ROUTES.signIn}>Sign In</Link>
+                </Button>
               </li>
             </ul>
           </nav>

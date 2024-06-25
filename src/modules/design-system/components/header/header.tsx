@@ -1,11 +1,15 @@
 import { ROUTES } from '@/config/routes'
+import { createClient } from '@/lib/supabase/server'
 import { Link } from '@/modules/design-system/components/link'
 
 import { Button } from '../button'
 import { ThemeSwitcher } from '../theme-switcher'
 import { GithubButtonLink } from './parts/github-button-link'
 
-const Header = () => {
+const Header = async () => {
+  const supabase = createClient()
+  const { data } = await supabase.auth.getUser()
+
   return (
     <header className="sticky top-0 z-50 h-header border-b-[0.75px] bg-['hsla(0,0%,100%,.01)'] backdrop-blur-md">
       <div className="flex w-screen items-center justify-center">
@@ -15,13 +19,6 @@ const Header = () => {
               <li>
                 <Link href={ROUTES.home}>
                   <span className="text-gradient font-logo text-base font-medium">everbase</span>
-                </Link>
-              </li>
-              <li>
-                <Link href={ROUTES.dashboard}>
-                  <span className="text-sm text-secondary transition-colors duration-150 hover:text-primary">
-                    Dashboard
-                  </span>
                 </Link>
               </li>
             </ul>
@@ -37,7 +34,7 @@ const Header = () => {
               </li>
               <li>
                 <Button asChild>
-                  <Link href={ROUTES.signIn}>Sign In</Link>
+                  <Link href={ROUTES.signIn}>{data.user ? 'Dashboard' : 'Sign In'}</Link>
                 </Button>
               </li>
             </ul>

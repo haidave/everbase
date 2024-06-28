@@ -6,7 +6,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -23,14 +23,15 @@
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.43.5",
     "@t3-oss/env-nextjs": "^0.10.1",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-696af53-20240625",
     "cmdk": "^1.0.0",
     "framer-motion": "^11.1.9",
     "geist": "^1.3.0",
     "lucide-react": "^0.376.0",
-    "next": "14.2.1",
+    "next": "rc",
     "next-themes": "^0.3.0",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "rc",
+    "react-dom": "rc",
     "zod": "^3.23.8"
   },
   "devDependencies": {

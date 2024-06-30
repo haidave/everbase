@@ -1,7 +1,7 @@
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
 import { createClient } from '@/lib/supabase/server'
-import { handleSignOut } from '@/modules/auth/actions'
+import { handleSignOut } from '@/modules/auth/lib/actions'
 import { Button } from '@/modules/design-system/components/button'
 import { NewPost } from '@/modules/posts/components/new-post'
 import { Posts } from '@/modules/posts/components/posts'

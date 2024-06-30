@@ -3,6 +3,7 @@
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
+import { ROUTES } from '@/config/routes'
 import { createClient } from '@/lib/supabase/server'
 
 const handleSignIn = async () => {
@@ -28,7 +29,7 @@ const handleSignOut = async () => {
   const supabase = createClient()
   await supabase.auth.signOut()
 
-  return redirect('/')
+  return redirect(ROUTES.home)
 }
 
 export { handleSignIn, handleSignOut }

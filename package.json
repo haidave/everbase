@@ -23,6 +23,8 @@
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.43.5",
     "@t3-oss/env-nextjs": "^0.10.1",
+    "@tanstack/react-query": "^5.49.0",
+    "@tanstack/react-query-devtools": "^5.49.0",
     "babel-plugin-react-compiler": "^0.0.0-experimental-696af53-20240625",
     "cmdk": "^1.0.0",
     "framer-motion": "^11.1.9",

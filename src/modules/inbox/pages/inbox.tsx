@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
 import { createClient } from '@/lib/supabase/server'
@@ -8,7 +9,11 @@ import { Posts } from '@/modules/posts/components/posts'
 import { getPosts } from '@/modules/posts/lib/actions'
 import { QUERY_KEYS } from '@/modules/posts/lib/const'
 
-export default async function DashboardPage() {
+export const metadata: Metadata = {
+  title: 'Inbox',
+}
+
+const InboxPage = async () => {
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
@@ -36,3 +41,5 @@ export default async function DashboardPage() {
     </HydrationBoundary>
   )
 }
+
+export { InboxPage }

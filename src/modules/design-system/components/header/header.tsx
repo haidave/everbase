@@ -20,7 +20,7 @@ const Header = async () => {
             </li>
             <li>
               <Button variant="shiny" asChild>
-                <Link href={ROUTES.signIn}>{data.user ? 'Dashboard' : 'Sign In'}</Link>
+                <Link href={ROUTES.signIn}>{data.user ? 'Go to App' : 'Sign In'}</Link>
               </Button>
             </li>
           </ul>

@@ -17,9 +17,9 @@ const buttonVariants = cva(
           'font-semibold text-secondary bg-transparent hover:bg-primary hover:text-primary active:bg-primary-active',
       },
       size: {
-        default: 'h-8 px-4 rounded-lg text-sm ',
-        large: 'h-12 px-6 rounded-lg text-base',
-        icon: 'h-8 w-8 rounded-lg',
+        default: 'h-8 px-4 rounded-md text-sm ',
+        large: 'h-12 px-6 rounded-md text-base',
+        icon: 'h-8 w-8 rounded-md',
       },
     },
     defaultVariants: {

@@ -7,7 +7,7 @@ import { addPost } from '@/modules/posts/lib/actions'
 
 import { QUERY_KEYS } from '../lib/const'
 
-export function NewPost() {
+export function AddPost() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({

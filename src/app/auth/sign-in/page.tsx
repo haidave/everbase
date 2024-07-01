@@ -1,5 +1,5 @@
 import { ROUTES } from '@/config/routes'
-import { handleSignIn } from '@/modules/auth/actions'
+import { handleSignIn } from '@/modules/auth/lib/actions'
 import { Button } from '@/modules/design-system/components/button'
 import { Link } from '@/modules/design-system/components/link'
 

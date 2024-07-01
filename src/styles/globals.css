@@ -5,32 +5,59 @@
 /* Custom CSS Variables */
 @layer base {
   :root {
+    --gray1: 0 0% 99%;
+    --gray2: 0 0% 98%;
+    --gray3: 0 0% 94%;
+    --gray4: 0 0% 91%;
+    --gray5: 0 0% 88%;
+    --gray6: 0 0% 85%;
+    --gray7: 0 0% 81%;
+    --gray8: 0 0% 73%;
+    --gray9: 0 0% 55%;
+    --gray10: 0 0% 51%;
+    --gray11: 0 0% 39%;
+    --gray12: 0 0% 13%;
+
+    --grayDark1: 0 0% 7%;
+    --grayDark2: 0 0% 10%;
+    --grayDark3: 0 0% 13%;
+    --grayDark4: 0 0% 16%;
+    --grayDark5: 0 0% 19%;
+    --grayDark6: 0 0% 23%;
+    --grayDark7: 0 0% 28%;
+    --grayDark8: 0 0% 38%;
+    --grayDark9: 0 0% 43%;
+    --grayDark10: 0 0% 48%;
+    --grayDark11: 0 0% 71%;
+    --grayDark12: 0 0% 93%;
+
     /* App Backgrounds */
-    --bg-base: #fcfcfc;
-    --bg-subtle: #f9f9f9;
+    --bg-base: var(--gray1);
+    --bg-subtle: var(--gray2);
 
     /* Component Background */
-    --bg-primary: #f0f0f0;
-    --bg-primary-hover: #e8e8e8;
-    --bg-primary-active: #e0e0e0;
+    --bg-primary: var(--gray3);
+    --bg-primary-hover: var(--gray4);
+    --bg-primary-active: var(--gray5);
 
-    --bg-primary-reverse: #222222;
-    --bg-primary-reverse-hover: #2a2a2a;
-    --bg-primary-reverse-active: #313131;
+    --bg-primary-reverse: var(--grayDark3);
+    --bg-primary-reverse-hover: var(--grayDark4);
+    --bg-primary-reverse-active: var(--grayDark5);
 
     /* Borders */
-    --border-line: #d9d9d9;
-    --border-primary: #cecece;
-    --border-primary-hover: #bbbbbb;
+    --border-line: var(--gray6);
+    --border-primary: var(--gray7);
+    --border-primary-hover: var(--gray8);
 
     /* Solid Background */
-    --bg-solid: #8d8d8d;
-    --bg-solid-hover: #838383;
+    --bg-solid: var(--gray9);
+    --bg-solid-hover: var(--gray10);
 
     /* Text */
-    --text-primary: #202020;
-    --text-primary-reverse: #eeeeee;
-    --text-secondary: #646464;
+    --text-primary: var(--gray12);
+    --text-primary-reverse: var(--greyDark12);
+    --text-secondary: var(--gray11);
+    --text-tertiary: var(--gray10);
 
     /* Box Shadow */
     --shadow-focus: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--text-primary);
@@ -41,33 +68,34 @@
 
   .dark {
     /* App Backgrounds */
-    --bg-base: #111111;
-    --bg-subtle: #191919;
+    --bg-base: var(--grayDark1);
+    --bg-subtle: var(--grayDark2);
 
     /* Component Background */
-    --bg-primary: #222222;
-    --bg-primary-hover: #2a2a2a;
-    --bg-primary-active: #313131;
+    --bg-primary: var(--grayDark3);
+    --bg-primary-hover: var(--grayDark4);
+    --bg-primary-active: var(--grayDark5);
 
-    --bg-primary-reverse: #f0f0f0;
-    --bg-primary-reverse-hover: #e8e8e8;
-    --bg-primary-reverse-active: #e0e0e0;
+    --bg-primary-reverse: var(--gray3);
+    --bg-primary-reverse-hover: var(--gray4);
+    --bg-primary-reverse-active: var(--gray5);
 
     /* Borders */
-    --border-line: #3a3a3a;
-    --border-primary: #484848;
-    --border-primary-hover: #606060;
+    --border-line: var(--grayDark6);
+    --border-primary: var(--grayDark7);
+    --border-primary-hover: var(--grayDark8);
 
     /* Solid Background */
-    --bg-solid: #6e6e6e;
-    --bg-solid-hover: #7b7b7b;
+    --bg-solid: var(--grayDark9);
+    --bg-solid-hover: var(--grayDark10);
 
     /* Text */
-    --text-primary: #eeeeee;
-    --text-primary-reverse: #202020;
-    --text-secondary: #b4b4b4;
-    --text-tertiary: #7b7b7b;
+    --text-primary: var(--grayDark12);
+    --text-primary-reverse: var(--gray12);
+    --text-secondary: var(--grayDark11);
+    --text-tertiary: var(--grayDark10);
 
+    /* TODO: change it */
     --bg-scroll-thumb: #333333;
     --shadow-focus: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--text-primary);
   }
@@ -87,7 +115,7 @@
   box-sizing: border-box;
   border-width: 0;
   border-style: solid;
-  border-color: var(--border-primary);
+  border-color: hsl(var(--border-primary));
 }
 
 * {
@@ -186,5 +214,5 @@ code > [data-line]::before {
   width: 1rem;
   margin-right: 2rem;
   text-align: right;
-  color: var(--border-primary);
+  color: hsl(var(--border-primary));
 }

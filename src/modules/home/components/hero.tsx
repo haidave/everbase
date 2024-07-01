@@ -1,5 +1,3 @@
-import { Button } from '@/modules/design-system/components/button'
-
 const Hero = () => {
   return (
     <section className="relative mx-auto mt-36 flex max-w-2xl flex-col items-center gap-6">
@@ -11,12 +9,6 @@ const Hero = () => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam aliquid culpa eos veritatis rem aut optio
         suscipit, ratione porro at!
       </p>
-
-      <div className="mt-6 flex items-center gap-6">
-        <Button asChild variant="shiny" size="large">
-          <span>Get Started</span>
-        </Button>
-      </div>
     </section>
   )
 }

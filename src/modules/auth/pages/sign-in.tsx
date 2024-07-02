@@ -14,7 +14,10 @@ const SignInPage = () => {
   return (
     <div className="grid h-svh place-items-center">
       <div className="absolute left-8 top-8">
-        <Link href={ROUTES.home} className="flex items-center gap-2 text-sm hover:underline hover:underline-offset-4">
+        <Link
+          href={ROUTES.home}
+          className="flex items-center gap-2 text-sm text-secondary transition-colors duration-150 hover:text-primary"
+        >
           <CornerUpLeftIcon className="size-4" />
           Back
         </Link>

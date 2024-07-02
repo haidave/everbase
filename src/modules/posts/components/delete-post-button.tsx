@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Trash2Icon } from 'lucide-react'
 
 import { Button } from '@/modules/design-system/components/button'
 import { deletePost } from '@/modules/posts/lib/actions'
@@ -54,8 +55,8 @@ export function DeletePostButton({ postId }: DeletePostButtonProps) {
 
   return (
     <>
-      <Button onClick={handleDelete} disabled={mutation.isPending}>
-        {mutation.isPending ? 'Deleting...' : 'Delete'}
+      <Button variant="ghost" size="icon" onClick={handleDelete} disabled={mutation.isPending}>
+        <Trash2Icon className="size-4" />
       </Button>
       {showConfirm && <ConfirmModal onConfirm={confirmDelete} onCancel={cancelDelete} />}
     </>

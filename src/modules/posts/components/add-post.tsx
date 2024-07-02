@@ -1,6 +1,7 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { PlusIcon } from 'lucide-react'
 
 import { Button } from '@/modules/design-system/components/button'
 import { addPost } from '@/modules/posts/lib/actions'
@@ -26,11 +27,10 @@ export function AddPost() {
 
   return (
     <div>
-      <h2>Add Post</h2>
       <form onSubmit={handleSubmit}>
-        <input name="content" className="border" />
-        <Button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? 'Adding...' : 'Add Post'}
+        <textarea name="content" className="w-full border focus:outline-none" />
+        <Button variant="ghost" size="icon" type="submit" disabled={mutation.isPending}>
+          <PlusIcon className="size-4" />
         </Button>
       </form>
       {mutation.isError && <p>Error: {mutation.error.message}</p>}

@@ -11,6 +11,8 @@ const buttonVariants = cva(
       variant: {
         default:
           'font-semibold text-primary-reverse bg-primary-reverse hover:bg-primary-reverse-hover active:bg-primary-reverse-active',
+        outline:
+          'font-semibold text-primary bg-transparent border border-primary hover:bg-primary-hover active:bg-primary-active',
         shiny:
           'font-semibold text-white to-black from-black/80 dark:text-black bg-gradient-to-r dark:from-white/80 dark:to-white',
         ghost:

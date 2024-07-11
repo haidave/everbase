@@ -23,7 +23,7 @@ const Posts = () => {
   return (
     <div className="grid gap-4">
       {posts?.map((post) => (
-        <div key={post.id} className="rounded bg-primary p-4">
+        <div key={post.id} className="rounded-xl bg-primary p-4 hover:bg-primary-hover">
           <p>{post.content}</p>
           <p>{post.created_at}</p>
           <DeletePostButton postId={post.id} />

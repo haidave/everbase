@@ -1,14 +1,20 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { SquarePenIcon } from 'lucide-react'
+import TextareaAutosize from 'react-textarea-autosize'
 
 import { Button } from '@/modules/design-system/components/button'
+import { Dialog, DialogContent, DialogTrigger } from '@/modules/design-system/components/dialog'
 import { addPost } from '@/modules/posts/lib/actions'
 
 import { QUERY_KEYS } from '../lib/const'
 
 export function AddPost() {
   const queryClient = useQueryClient()
+  const [isOpen, setIsOpen] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const mutation = useMutation({
     mutationFn: addPost,
@@ -24,16 +30,54 @@ export function AddPost() {
     event.currentTarget.reset()
   }
 
+  const handleFormClick = () => {
+    if (textareaRef.current) {
+      textareaRef.current.focus()
+    }
+  }
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'n' && !event.metaKey && !event.ctrlKey && !isOpen) {
+        event.preventDefault()
+        setIsOpen(true)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen])
+
   return (
     <div>
-      <h2>Add Post</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="content" className="border" />
-        <Button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? 'Adding...' : 'Add Post'}
-        </Button>
-      </form>
-      {mutation.isError && <p>Error: {mutation.error.message}</p>}
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger asChild>
+          <Button variant="ghost" size="icon" className="size-7 bg-subtle">
+            <SquarePenIcon className="size-4" />
+          </Button>
+        </DialogTrigger>
+
+        <DialogContent className="grid gap-2 sm:max-w-3xl">
+          <form onSubmit={handleSubmit} className="relative max-h-[75svh] pb-14" onClick={handleFormClick}>
+            <TextareaAutosize
+              ref={textareaRef}
+              placeholder="Type something..."
+              name="content"
+              minRows={4}
+              className="textarea-scrollbar size-full max-h-[calc(75svh-4rem)] grow resize-none px-6 pt-3 focus:outline-none"
+            />
+
+            <div className="absolute inset-x-0 bottom-0 flex items-center justify-end">
+              <Button variant="shiny" type="submit" disabled={mutation.isPending}>
+                Add
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
-import { AddPost } from '@/modules/posts/components/add-post'
 import { Posts } from '@/modules/posts/components/posts'
 import { getPosts } from '@/modules/posts/lib/actions'
 import { QUERY_KEYS } from '@/modules/posts/lib/const'
@@ -20,8 +19,7 @@ const InboxPage = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="flex flex-col gap-4">
-        <AddPost />
+      <div className="mx-auto flex w-full max-w-4xl flex-col">
         <Posts />
       </div>
     </HydrationBoundary>

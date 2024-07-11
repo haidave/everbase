@@ -17,7 +17,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@supabase/ssr": "^0.3.0",
@@ -34,6 +34,7 @@
     "next-themes": "^0.3.0",
     "react": "rc",
     "react-dom": "rc",
+    "react-textarea-autosize": "^8.5.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {

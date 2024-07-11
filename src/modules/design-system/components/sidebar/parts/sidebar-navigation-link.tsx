@@ -22,12 +22,20 @@ const SidebarNavigationLink = ({ href, icon, label, isExternal }: SidebarNavigat
   return (
     <li
       className={cn(
-        'flex cursor-pointer rounded-md text-sm font-medium',
+        'group flex cursor-pointer rounded-md text-sm font-medium text-secondary',
         'ease transition-colors duration-150',
-        isActive ? 'bg-primary' : 'hover:bg-primary-hover active:bg-primary-active'
+        isActive ? 'bg-primary text-primary' : 'hover:bg-primary-hover hover:text-primary active:bg-primary-active'
       )}
     >
-      <Link href={href} isExternal={isExternal} className="flex w-full items-center gap-2 px-4 py-2.5">
+      <Link
+        href={href}
+        isExternal={isExternal}
+        className={cn(
+          'flex w-full items-center gap-2 px-4 py-2',
+          '[&>svg]:ease [&>svg]:text-secondary [&>svg]:transition-colors [&>svg]:duration-150',
+          'group-hover:[&>svg]:text-primary'
+        )}
+      >
         {icon}
         <span>{label}</span>
       </Link>

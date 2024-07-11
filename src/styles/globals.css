@@ -107,6 +107,51 @@
   }
 }
 
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Textarea Scrollbar Width */
+  .textarea-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Textarea Scrollbar Track */
+  .textarea-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 8px;
+  }
+
+  /* Textarea Scrollbar Handle */
+  .textarea-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--bg-primary));
+    border-radius: 8px;
+  }
+
+  /* Textarea Scrollbar Handle on hover */
+  .textarea-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--bg-primary-hover));
+    cursor: grab;
+  }
+
+  /* Textarea Scrollbar Handle on active */
+  .textarea-scrollbar::-webkit-scrollbar-thumb:active {
+    cursor: grabbing;
+  }
+
+  /* Textarea Scrollbar Gutter */
+  .textarea-scrollbar {
+    scrollbar-gutter: stable;
+  }
+}
+
 /* Custom CSS Reset from https://www.joshwcomeau.com/css/custom-css-reset/ */
 
 *,

@@ -6,7 +6,7 @@ import { SquarePenIcon } from 'lucide-react'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import { Button } from '@/modules/design-system/components/button'
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/modules/design-system/components/dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@/modules/design-system/components/dialog'
 import { addPost } from '@/modules/posts/lib/actions'
 
 import { QUERY_KEYS } from '../lib/const'
@@ -67,13 +67,10 @@ export function AddPost() {
               placeholder="Type something..."
               name="content"
               minRows={4}
-              className="size-full max-h-[calc(75svh-4rem)] grow resize-none focus:outline-none"
+              className="textarea-scrollbar size-full max-h-[calc(75svh-4rem)] grow resize-none px-6 pt-3 focus:outline-none"
             />
 
-            <div className="absolute inset-x-0 bottom-0 flex items-center justify-between">
-              <DialogClose asChild>
-                <Button variant="outline">Close</Button>
-              </DialogClose>
+            <div className="absolute inset-x-0 bottom-0 flex items-center justify-end">
               <Button variant="shiny" type="submit" disabled={mutation.isPending}>
                 Add
               </Button>

@@ -24,7 +24,7 @@ const Notes = () => {
     <div className="grid gap-4">
       {notes?.map((note) => (
         <div key={note.id} className="rounded-xl bg-primary p-4 hover:bg-primary-hover">
-          <p>{note.content}</p>
+          <p className="font-mono">{note.content}</p>
           <p>{note.created_at}</p>
           <DeleteNoteButton noteId={note.id} />
         </div>

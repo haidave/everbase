@@ -103,7 +103,7 @@ export function AddNote() {
                         autoFocus
                         placeholder="Type something..."
                         minRows={4}
-                        className="textarea-scrollbar size-full max-h-[calc(75svh-4rem)] grow resize-none px-6 pt-3 focus:outline-none"
+                        className="textarea-scrollbar size-full max-h-[calc(75svh-4rem)] grow resize-none px-6 pt-3 font-mono focus:outline-none"
                         onKeyDown={handleKeyDown}
                         {...field}
                       />

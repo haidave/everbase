@@ -16,27 +16,27 @@ import {
   DialogTrigger,
 } from '@/modules/design-system/components/dialog'
 import { Form, FormControl, FormField, FormItem } from '@/modules/design-system/components/form'
-import { addPost } from '@/modules/posts/lib/actions'
+import { addNote } from '@/modules/notes/lib/actions'
 
 import { QUERY_KEYS } from '../../lib/const'
-import { addPostSchema, type AddPostSchemaType } from './validation'
+import { addNoteSchema, type AddNoteSchemaType } from './validation'
 
-export function AddPost() {
+export function AddNote() {
   const queryClient = useQueryClient()
   const [isOpen, setIsOpen] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
-  const form = useForm<AddPostSchemaType>({
-    resolver: zodResolver(addPostSchema),
+  const form = useForm<AddNoteSchemaType>({
+    resolver: zodResolver(addNoteSchema),
   })
 
   const { control, handleSubmit, formState, watch, reset } = form
   const content = watch('content')
 
   const mutation = useMutation({
-    mutationFn: addPost,
+    mutationFn: addNote,
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: QUERY_KEYS.POSTS })
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEYS.NOTES })
       reset()
       setIsSaving(false)
       setIsOpen(false)
@@ -46,7 +46,7 @@ export function AddPost() {
     },
   })
 
-  const onSubmit = (data: AddPostSchemaType) => {
+  const onSubmit = (data: AddNoteSchemaType) => {
     setIsSaving(true)
     const formData = new FormData()
     formData.append('content', data.content)

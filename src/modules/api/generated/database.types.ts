@@ -3,7 +3,7 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
-      posts: {
+      notes: {
         Row: {
           content: string
           created_at: string
@@ -24,7 +24,7 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'posts_user_id_fkey'
+            foreignKeyName: 'notes_user_id_fkey'
             columns: ['user_id']
             isOneToOne: false
             referencedRelation: 'users'

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { ROUTES } from '@/config/routes'
-import { AddPost } from '@/modules/posts/components/add-post/add-post'
+import { AddNote } from '@/modules/notes/components/add-note/add-note'
 
 import { SidebarNavigation } from './parts/sidebar-navigation'
 import { SidebarUser } from './parts/sidebar-user'
@@ -15,7 +15,7 @@ const Sidebar = () => {
             <span className="text-gradient font-logo text-base font-medium">everbase</span>
           </Link>
 
-          <AddPost />
+          <AddNote />
         </div>
 
         <SidebarNavigation />

@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       fontFamily: {
         logo: 'var(--font-logo)',
+        mono: 'var(--font-mono)',
       },
       textColor: {
         primary: 'hsl(var(--text-primary) / <alpha-value>)',

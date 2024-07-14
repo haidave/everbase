@@ -9,7 +9,7 @@ import { SidebarUser } from './parts/sidebar-user'
 const Sidebar = () => {
   return (
     <aside className="sticky left-0 top-0 z-40 block h-svh xl:block">
-      <div className="flex h-full w-60 flex-col overflow-auto px-4 py-3">
+      <div className="flex h-full w-60 flex-col overflow-auto p-4">
         <div className="flex items-center justify-between">
           <Link href={ROUTES.home}>
             <span className="text-gradient font-logo text-base font-medium">everbase</span>

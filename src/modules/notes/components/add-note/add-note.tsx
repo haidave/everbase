@@ -8,14 +8,9 @@ import { useForm } from 'react-hook-form'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import { Button } from '@/modules/design-system/components/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from '@/modules/design-system/components/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/modules/design-system/components/dialog'
 import { Form, FormControl, FormField, FormItem } from '@/modules/design-system/components/form'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modules/design-system/components/tooltip'
 import { addNote } from '@/modules/notes/lib/actions'
 
 import { QUERY_KEYS } from '../../lib/const'
@@ -80,11 +75,23 @@ export function AddNote() {
   return (
     <div>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTrigger asChild>
-          <Button variant="ghost" size="icon" className="size-7 bg-subtle">
-            <SquarePenIcon className="size-4" />
-          </Button>
-        </DialogTrigger>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon" className="size-7 bg-subtle" onClick={() => setIsOpen(true)}>
+                <SquarePenIcon className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="flex items-center gap-1.5">
+                Create a note{' '}
+                <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                  N
+                </kbd>
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <DialogContent className="grid gap-2 sm:max-w-3xl">
           <DialogTitle className="sr-only">Create new note</DialogTitle>
@@ -113,9 +120,28 @@ export function AddNote() {
               />
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-end">
                 {(content && content.trim() !== '' && formState.isDirty) || isSaving ? (
-                  <Button variant="outline" type="submit" disabled={isSaving}>
-                    {isSaving ? 'Saving...' : 'Save'}
-                  </Button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="shiny" type="submit" disabled={isSaving}>
+                          {isSaving ? 'Saving...' : 'Save'}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom">
+                        <p className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-1">
+                            <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                              ⌘
+                            </kbd>
+                            <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                              Enter
+                            </kbd>
+                          </div>
+                          to save note
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 ) : null}
               </div>
             </form>

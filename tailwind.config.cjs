@@ -22,6 +22,7 @@ module.exports = {
         'primary-reverse': 'hsl(var(--text-primary-reverse) / <alpha-value>)',
         secondary: 'hsl(var(--text-secondary) / <alpha-value>)',
         tertiary: 'hsl(var(--text-tertiary) / <alpha-value>)',
+        label: 'hsl(var(--text-label) / <alpha-value>)',
       },
       backgroundColor: {
         base: 'hsl(var(--bg-base) / <alpha-value>)',

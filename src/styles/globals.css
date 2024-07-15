@@ -94,6 +94,7 @@
     --text-primary-reverse: var(--gray12);
     --text-secondary: var(--grayDark11);
     --text-tertiary: var(--grayDark10);
+    --text-label: var(--grayDark7);
 
     /* TODO: change it */
     --bg-scroll-thumb: #333333;

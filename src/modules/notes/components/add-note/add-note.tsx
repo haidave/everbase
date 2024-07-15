@@ -25,7 +25,7 @@ export function AddNote() {
     resolver: zodResolver(addNoteSchema),
   })
 
-  const { control, handleSubmit, formState, watch, reset } = form
+  const { control, handleSubmit, watch, reset } = form
   const content = watch('content')
 
   const mutation = useMutation({
@@ -42,10 +42,12 @@ export function AddNote() {
   })
 
   const onSubmit = (data: AddNoteSchemaType) => {
-    setIsSaving(true)
-    const formData = new FormData()
-    formData.append('content', data.content)
-    mutation.mutate(formData)
+    if (data.content && data.content.trim() !== '') {
+      setIsSaving(true)
+      const formData = new FormData()
+      formData.append('content', data.content)
+      mutation.mutate(formData)
+    }
   }
 
   useEffect(() => {
@@ -66,11 +68,11 @@ export function AddNote() {
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
       event.preventDefault()
-      if (content && content.trim() !== '' && formState.isDirty) {
-        void handleSubmit(onSubmit)()
-      }
+      void handleSubmit(onSubmit)()
     }
   }
+
+  const showSaveButton = content && content.trim() !== ''
 
   return (
     <div>
@@ -110,7 +112,7 @@ export function AddNote() {
                         autoFocus
                         placeholder="Type something..."
                         minRows={4}
-                        className="textarea-scrollbar size-full max-h-[calc(75svh-4rem)] grow resize-none px-6 pt-3 font-mono focus:outline-none"
+                        className="textarea-scrollbar size-full max-h-[calc(75svh-4rem)] grow resize-none px-6 pt-3 font-mono leading-relaxed focus:outline-none"
                         onKeyDown={handleKeyDown}
                         {...field}
                       />
@@ -119,7 +121,7 @@ export function AddNote() {
                 )}
               />
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-end">
-                {(content && content.trim() !== '' && formState.isDirty) || isSaving ? (
+                {(showSaveButton || isSaving) && (
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -142,7 +144,7 @@ export function AddNote() {
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
-                ) : null}
+                )}
               </div>
             </form>
           </Form>

@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { isToday, isYesterday, parse } from 'date-fns'
 
 import { type Tables } from '@/modules/api/generated/database.types'
+import { Popover, PopoverContent, PopoverTrigger } from '@/modules/design-system/components/popover'
 import { DeleteNoteButton } from '@/modules/notes/components/delete-note-button'
 import { getGroupedNotes } from '@/modules/notes/lib/actions'
 
@@ -56,12 +57,24 @@ const Notes = () => {
           </div>
           <ul className="grid gap-4">
             {notes.map((note) => (
-              <li key={note.id} className="relative rounded-xl bg-primary px-5 py-3 hover:bg-primary-hover">
-                <p className="leading-relaxed tracking-normal">{note.content}</p>
-                <div className="absolute left-full top-0 ml-4">
+              <Popover key={note.id}>
+                <PopoverTrigger
+                  aria-label="Note actions"
+                  className="rounded-xl text-left focus-visible:shadow-focus focus-visible:outline-0 [&[data-state='open']>li]:bg-primary-active"
+                >
+                  <li className="relative rounded-xl bg-primary px-5 py-3 transition-all duration-150 hover:bg-primary-hover">
+                    <p className="leading-relaxed">{note.content}</p>
+                  </li>
+                </PopoverTrigger>
+                <PopoverContent
+                  side="right"
+                  sideOffset={12}
+                  align="start"
+                  className="rounded-md border border-line bg-subtle"
+                >
                   <DeleteNoteButton noteId={note.id} />
-                </div>
-              </li>
+                </PopoverContent>
+              </Popover>
             ))}
           </ul>
         </div>

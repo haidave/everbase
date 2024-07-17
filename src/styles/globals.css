@@ -18,6 +18,7 @@
     --gray11: 0 0% 39%;
     --gray12: 0 0% 13%;
 
+    --grayDark0: 0 0% 5%;
     --grayDark1: 0 0% 7%;
     --grayDark2: 0 0% 10%;
     --grayDark3: 0 0% 13%;
@@ -32,6 +33,7 @@
     --grayDark12: 0 0% 93%;
 
     /* App Backgrounds */
+    --bg-app: var(--gray1);
     --bg-base: var(--gray1);
     --bg-subtle: var(--gray2);
 
@@ -68,6 +70,7 @@
 
   .dark {
     /* App Backgrounds */
+    --bg-app: var(--grayDark0);
     --bg-base: var(--grayDark1);
     --bg-subtle: var(--grayDark2);
 

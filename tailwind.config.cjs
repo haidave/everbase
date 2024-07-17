@@ -25,6 +25,7 @@ module.exports = {
         label: 'hsl(var(--text-label) / <alpha-value>)',
       },
       backgroundColor: {
+        app: 'hsl(var(--bg-app) / <alpha-value>)',
         base: 'hsl(var(--bg-base) / <alpha-value>)',
         subtle: 'hsl(var(--bg-subtle) / <alpha-value>)',
         primary: 'hsl(var(--bg-primary) / <alpha-value>)',

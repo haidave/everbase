@@ -8,7 +8,7 @@ import { SidebarUser } from './parts/sidebar-user'
 
 const Sidebar = () => {
   return (
-    <aside className="sticky left-0 top-0 z-40 block h-svh xl:block">
+    <aside className="sticky left-0 top-0 z-40 block h-svh bg-app xl:block">
       <div className="flex h-full w-60 flex-col overflow-auto p-4">
         <div className="flex items-center justify-between">
           <Link href={ROUTES.home}>

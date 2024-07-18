@@ -3,15 +3,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { isToday, isYesterday, parse } from 'date-fns'
 
-import { type Tables } from '@/modules/api/generated/database.types'
+import { type GroupedNotes } from '@/modules/api/types'
 import { Popover, PopoverContent, PopoverTrigger } from '@/modules/design-system/components/popover'
 import { DeleteNoteButton } from '@/modules/notes/components/delete-note-button'
 import { getGroupedNotes } from '@/modules/notes/lib/actions'
 
 import { QUERY_KEYS } from '../lib/const'
-
-type Note = Tables<'notes'>
-type GroupedNotes = Record<string, Note[]>
+import { EditNoteButton } from './edit-note-button'
 
 const Notes = () => {
   const {
@@ -70,8 +68,9 @@ const Notes = () => {
                   side="right"
                   sideOffset={12}
                   align="start"
-                  className="rounded-md border border-line bg-subtle"
+                  className="flex gap-1 rounded-md border border-line bg-subtle"
                 >
+                  <EditNoteButton note={note} />
                   <DeleteNoteButton noteId={note.id} />
                 </PopoverContent>
               </Popover>

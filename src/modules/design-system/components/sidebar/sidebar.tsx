@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { ROUTES } from '@/config/routes'
-import { AddNote } from '@/modules/notes/components/add-note/add-note'
+import { AddNote } from '@/modules/notes/components/add-note'
 
 import { SidebarNavigation } from './parts/sidebar-navigation'
 import { SidebarUser } from './parts/sidebar-user'

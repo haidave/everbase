@@ -3,7 +3,7 @@
 import { format, parseISO } from 'date-fns'
 
 import { createClient } from '@/lib/supabase/server'
-import { type Tables } from '@/modules/api/generated/database.types'
+import { type GroupedNotes, type Note } from '@/modules/api/types'
 
 export async function getNotes() {
   const supabase = createClient()
@@ -15,12 +15,6 @@ export async function getNotes() {
   }
 
   return notes
-}
-
-type Note = Tables<'notes'>
-
-type GroupedNotes = {
-  [date: string]: Note[]
 }
 
 export async function getGroupedNotes(): Promise<GroupedNotes> {
@@ -48,6 +42,18 @@ export async function getGroupedNotes(): Promise<GroupedNotes> {
   return groupedNotes
 }
 
+export async function getNote(noteId: string) {
+  const supabase = createClient()
+
+  const { data: note, error } = await supabase.from('notes').select('*').eq('id', noteId).single()
+
+  if (error) {
+    throw new Error('Failed to fetch note')
+  }
+
+  return note
+}
+
 export async function addNote(formData: FormData) {
   const content = String(formData.get('content'))
   const supabase = createClient()
@@ -60,6 +66,24 @@ export async function addNote(formData: FormData) {
 
   if (error) {
     throw new Error('Failed to add note')
+  }
+
+  return { success: true }
+}
+
+export async function updateNote(formData: FormData) {
+  const noteId = String(formData.get('noteId'))
+  const content = String(formData.get('content'))
+  const supabase = createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  const { error } = await supabase.from('notes').update({ content }).match({ id: noteId, user_id: user!.id })
+
+  if (error) {
+    throw new Error('Failed to update note')
   }
 
   return { success: true }

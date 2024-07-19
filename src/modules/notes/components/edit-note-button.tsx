@@ -33,7 +33,7 @@ export function EditNoteButton({ note }: EditNoteButtonProps) {
 
   return (
     <>
-      <TooltipProvider>
+      <TooltipProvider delayDuration={300}>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)}>

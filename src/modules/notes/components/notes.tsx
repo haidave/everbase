@@ -9,6 +9,7 @@ import { DeleteNoteButton } from '@/modules/notes/components/delete-note-button'
 import { getGroupedNotes } from '@/modules/notes/lib/actions'
 
 import { QUERY_KEYS } from '../lib/const'
+import { CopyNoteButton } from './copy-note-button'
 import { EditNoteButton } from './edit-note-button'
 
 const Notes = () => {
@@ -71,6 +72,7 @@ const Notes = () => {
                   className="flex gap-1 rounded-md border border-line bg-subtle"
                 >
                   <EditNoteButton note={note} />
+                  <CopyNoteButton content={note.content} />
                   <DeleteNoteButton noteId={note.id} />
                 </PopoverContent>
               </Popover>

@@ -62,7 +62,7 @@
     --text-tertiary: var(--gray10);
 
     /* Box Shadow */
-    --shadow-focus: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--text-primary);
+    --shadow-focus: 0 0 0 2px var(--bg-primary), 0 0 0 3px var(--text-primary);
 
     /* Height */
     --header-height: 4rem;

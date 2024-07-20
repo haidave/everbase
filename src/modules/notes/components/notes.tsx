@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { isToday, isYesterday, parse } from 'date-fns'
 
@@ -13,6 +14,8 @@ import { CopyNoteButton } from './copy-note-button'
 import { EditNoteButton } from './edit-note-button'
 
 const Notes = () => {
+  const popoverContentRef = useRef<HTMLDivElement>(null)
+
   const {
     data: groupedNotes,
     isLoading,
@@ -37,13 +40,10 @@ const Notes = () => {
   }
 
   const formatDate = (dateString: string) => {
-    // Parse the date string we get from getGroupedNotes
     const date = parse(dateString, 'MMMM d, yyyy', new Date())
-
     if (isToday(date)) return 'Today'
     if (isYesterday(date)) return 'Yesterday'
-
-    return dateString // Return the original formatted string if not today or yesterday
+    return dateString
   }
 
   return (
@@ -66,10 +66,16 @@ const Notes = () => {
                   </li>
                 </PopoverTrigger>
                 <PopoverContent
+                  ref={popoverContentRef}
                   side="right"
                   sideOffset={12}
                   align="start"
                   className="flex gap-1 rounded-md border border-line bg-subtle"
+                  onOpenAutoFocus={(e) => {
+                    e.preventDefault()
+                    popoverContentRef.current?.setAttribute('tabindex', '-1')
+                    popoverContentRef.current?.focus()
+                  }}
                 >
                   <EditNoteButton note={note} />
                   <CopyNoteButton content={note.content} />

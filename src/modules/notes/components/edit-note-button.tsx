@@ -18,7 +18,13 @@ export function EditNoteButton({ note }: EditNoteButtonProps) {
 
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'e' && !event.metaKey && !event.ctrlKey && !isOpen) {
+      if (
+        event.key === 'e' &&
+        !event.metaKey &&
+        !event.ctrlKey &&
+        !isOpen &&
+        !document.querySelector('[data-edit-dialog]')
+      ) {
         event.preventDefault()
         setIsOpen(true)
       }

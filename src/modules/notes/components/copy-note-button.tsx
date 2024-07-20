@@ -13,7 +13,18 @@ type CopyNoteButtonProps = {
 
 const CopyNoteButton = ({ content }: CopyNoteButtonProps) => {
   const [isCopied, setIsCopied] = useState(false)
+  const [showTooltip, setShowTooltip] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
+
+  const handleCopyToClipboard = useCallback(async () => {
+    try {
+      await copyToClipboard(content)
+      setIsCopied(true)
+      setShowTooltip(true)
+    } catch (error) {
+      console.error('Failed to copy content:', error)
+    }
+  }, [content])
 
   useEffect(() => {
     if (isCopied) {
@@ -27,18 +38,15 @@ const CopyNoteButton = ({ content }: CopyNoteButtonProps) => {
     }
   }, [isCopied])
 
-  const handleCopyToClipboard = useCallback(async () => {
-    try {
-      await copyToClipboard(content)
-      setIsCopied(true)
-    } catch (error) {
-      console.error('Failed to copy content:', error)
-    }
-  }, [content])
-
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'c' && !event.metaKey && !event.ctrlKey && !isCopied) {
+      if (
+        event.key === 'c' &&
+        !event.metaKey &&
+        !event.ctrlKey &&
+        !isCopied &&
+        !document.querySelector('[data-edit-dialog]')
+      ) {
         event.preventDefault()
         event.stopPropagation()
         void handleCopyToClipboard()
@@ -55,7 +63,7 @@ const CopyNoteButton = ({ content }: CopyNoteButtonProps) => {
 
   return (
     <TooltipProvider delayDuration={300}>
-      <Tooltip>
+      <Tooltip open={showTooltip} onOpenChange={setShowTooltip}>
         <TooltipTrigger asChild>
           <Button
             variant="ghost"

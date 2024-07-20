@@ -11,7 +11,7 @@ const Sidebar = () => {
     <aside className="sticky left-0 top-0 z-40 block h-svh bg-app xl:block">
       <div className="flex h-full w-60 flex-col overflow-auto p-4">
         <div className="flex items-center justify-between">
-          <Link href={ROUTES.home}>
+          <Link href={ROUTES.home} className="rounded-md focus-visible:shadow-focus focus-visible:outline-0">
             <span className="text-gradient font-logo text-base font-medium">everbase</span>
           </Link>
 

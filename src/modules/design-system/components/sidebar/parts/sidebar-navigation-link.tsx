@@ -33,7 +33,8 @@ const SidebarNavigationLink = ({ href, icon, label, isExternal }: SidebarNavigat
         className={cn(
           'flex w-full items-center gap-2 px-4 py-2',
           '[&>svg]:ease [&>svg]:text-secondary [&>svg]:transition-colors [&>svg]:duration-150',
-          'group-hover:[&>svg]:text-primary'
+          'group-hover:[&>svg]:text-primary',
+          'rounded-md focus-visible:shadow-focus focus-visible:outline-0'
         )}
       >
         {icon}

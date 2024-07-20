@@ -14,7 +14,7 @@ const Header = async () => {
         <nav className="w-full max-w-7xl px-8 py-4">
           <ul className="flex w-full items-center justify-between gap-8">
             <li>
-              <Link href={ROUTES.home}>
+              <Link href={ROUTES.home} className="rounded-md">
                 <span className="text-gradient font-logo text-base font-medium">everbase</span>
               </Link>
             </li>

@@ -62,7 +62,7 @@ const Notes = () => {
                   className="rounded-lg text-left focus-visible:shadow-focus focus-visible:outline-0 [&[data-state='open']>li]:bg-primary-active"
                 >
                   <li className="relative rounded-lg bg-primary px-5 py-3 transition-all duration-150 hover:bg-primary-hover active:bg-primary-active">
-                    <p className="leading-relaxed">{note.content}</p>
+                    <div className="leading-relaxed" dangerouslySetInnerHTML={{ __html: note.content }} />
                   </li>
                 </PopoverTrigger>
                 <PopoverContent

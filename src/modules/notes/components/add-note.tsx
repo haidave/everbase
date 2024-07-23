@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { SquarePenIcon } from 'lucide-react'
@@ -70,8 +70,18 @@ export function AddNote() {
     }
   }, [isOpen])
 
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      setIsOpen(open)
+      if (!open) {
+        reset()
+      }
+    },
+    [reset]
+  )
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>

@@ -7,7 +7,6 @@ import { EditorContent, Extension, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { Bold, Code, Italic, List, ListOrdered, Strikethrough, TextQuote } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
 import { Button } from '@/modules/design-system/components/button'
 import { Toggle } from '@/modules/design-system/components/toggle'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modules/design-system/components/tooltip'
@@ -62,8 +61,11 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
         addKeyboardShortcuts() {
           return {
             'Mod-Enter': () => {
-              handleOnSubmit()
-              return true
+              if (!this.editor.isEmpty) {
+                handleOnSubmit()
+                return true
+              }
+              return false
             },
           }
         },
@@ -124,12 +126,12 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
         className="textarea-scrollbar max-h-[calc(75svh-4rem)] overflow-y-auto bg-base px-6 pt-3 font-mono leading-relaxed focus:outline-none"
       />
 
-      <div className="relative mt-8 flex justify-between">
+      <div className="relative mt-8 grid w-full grid-cols-[1fr_auto_1fr] place-items-center">
         <Button
           variant="ghost"
           type="button"
           onClick={toggleCount}
-          className="mt-auto h-max px-1"
+          className="h-max justify-self-start px-2"
           aria-label={`Toggle between word and character count. Currently showing ${label}.`}
         >
           <span className="font-mono text-3xs font-normal text-tertiary">
@@ -137,7 +139,7 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
           </span>
         </Button>
 
-        <div className="absolute left-1/2 flex -translate-x-1/2 flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1 justify-self-center">
           <Toggle size="sm" pressed={editor.isActive('bold')} onPressedChange={toggleBold}>
             <Bold className="size-4" />
           </Toggle>
@@ -161,34 +163,36 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
           </Toggle>
         </div>
 
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="shiny"
-                type="submit"
-                onClick={handleOnSubmit}
-                disabled={isSaving}
-                className={cn(hasContent() || isSaving ? 'opacity-100' : 'pointer-events-none opacity-0', 'ml-auto')}
-              >
-                {isSaving ? 'Saving...' : 'Save'}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center gap-1">
-                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                    ⌘
-                  </kbd>
-                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                    Enter
-                  </kbd>
+        {(hasContent() || isSaving) && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="shiny"
+                  type="submit"
+                  onClick={handleOnSubmit}
+                  disabled={isSaving || editor.isEmpty}
+                  className="justify-self-end"
+                >
+                  {isSaving ? 'Saving...' : 'Save'}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1">
+                    <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                      ⌘
+                    </kbd>
+                    <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                      Enter
+                    </kbd>
+                  </div>
+                  to save note
                 </div>
-                to save note
-              </div>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
       </div>
     </div>
   )

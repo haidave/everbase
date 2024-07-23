@@ -3,9 +3,11 @@
 import { useCallback, useState } from 'react'
 import CharacterCount from '@tiptap/extension-character-count'
 import Placeholder from '@tiptap/extension-placeholder'
+import TaskItem from '@tiptap/extension-task-item'
+import TaskList from '@tiptap/extension-task-list'
 import { EditorContent, Extension, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { Bold, Code, Italic, List, ListOrdered, Strikethrough, TextQuote } from 'lucide-react'
+import { Bold, Code, Italic, List, ListOrdered, ListTodo, Strikethrough, TextQuote } from 'lucide-react'
 
 import { Button } from '@/modules/design-system/components/button'
 import { Toggle } from '@/modules/design-system/components/toggle'
@@ -56,6 +58,17 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
         placeholder: 'Type something...',
       }),
       CharacterCount,
+      TaskItem.configure({
+        nested: true,
+        HTMLAttributes: {
+          class: 'flex gap-2 items-center [&>div>p]:min-w-px',
+        },
+      }),
+      TaskList.configure({
+        HTMLAttributes: {
+          class: 'pl-0',
+        },
+      }),
       Extension.create({
         name: 'submit',
         addKeyboardShortcuts() {
@@ -89,12 +102,16 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
     editor?.chain().focus().toggleStrike().run()
   }, [editor])
 
+  const toggleOrderedList = useCallback(() => {
+    editor?.chain().focus().toggleOrderedList().run()
+  }, [editor])
+
   const toggleBulletList = useCallback(() => {
     editor?.chain().focus().toggleBulletList().run()
   }, [editor])
 
-  const toggleOrderedList = useCallback(() => {
-    editor?.chain().focus().toggleOrderedList().run()
+  const toggleTaskList = useCallback(() => {
+    editor?.chain().focus().toggleTaskList().run()
   }, [editor])
 
   const blockQuote = useCallback(() => {
@@ -150,9 +167,11 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Toggle size="sm" pressed={editor.isActive('bold')} onPressedChange={toggleBold}>
-                  <Bold className="size-4" />
-                </Toggle>
+                <div>
+                  <Toggle size="sm" pressed={editor.isActive('bold')} onPressedChange={toggleBold}>
+                    <Bold className="size-4" />
+                  </Toggle>
+                </div>
               </TooltipTrigger>
               <TooltipContent side="bottom">
                 <div className="flex items-center gap-1">
@@ -169,9 +188,11 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Toggle size="sm" pressed={editor.isActive('italic')} onPressedChange={toggleItalic}>
-                  <Italic className="size-4" />
-                </Toggle>
+                <div>
+                  <Toggle size="sm" pressed={editor.isActive('italic')} onPressedChange={toggleItalic}>
+                    <Italic className="size-4" />
+                  </Toggle>
+                </div>
               </TooltipTrigger>
               <TooltipContent side="bottom">
                 <div className="flex items-center gap-1">
@@ -188,9 +209,11 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Toggle size="sm" pressed={editor.isActive('strike')} onPressedChange={toggleStrike}>
-                  <Strikethrough className="size-4" />
-                </Toggle>
+                <div>
+                  <Toggle size="sm" pressed={editor.isActive('strike')} onPressedChange={toggleStrike}>
+                    <Strikethrough className="size-4" />
+                  </Toggle>
+                </div>
               </TooltipTrigger>
               <TooltipContent side="bottom">
                 <div className="flex items-center gap-1">
@@ -210,9 +233,11 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Toggle size="sm" pressed={editor.isActive('orderedList')} onPressedChange={toggleOrderedList}>
-                  <ListOrdered className="size-4" />
-                </Toggle>
+                <div>
+                  <Toggle size="sm" pressed={editor.isActive('orderedList')} onPressedChange={toggleOrderedList}>
+                    <ListOrdered className="size-4" />
+                  </Toggle>
+                </div>
               </TooltipTrigger>
               <TooltipContent side="bottom">
                 <div className="flex items-center gap-1">
@@ -232,9 +257,11 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Toggle size="sm" pressed={editor.isActive('bulletList')} onPressedChange={toggleBulletList}>
-                  <List className="size-4" />
-                </Toggle>
+                <div>
+                  <Toggle size="sm" pressed={editor.isActive('bulletList')} onPressedChange={toggleBulletList}>
+                    <List className="size-4" />
+                  </Toggle>
+                </div>
               </TooltipTrigger>
               <TooltipContent side="bottom">
                 <div className="flex items-center gap-1">
@@ -254,9 +281,35 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Toggle size="sm" pressed={editor.isActive('blockquote')} onPressedChange={blockQuote}>
-                  <TextQuote className="size-4" />
-                </Toggle>
+                <div>
+                  <Toggle size="sm" pressed={editor.isActive('taskList')} onPressedChange={toggleTaskList}>
+                    <ListTodo className="size-4" />
+                  </Toggle>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <div className="flex items-center gap-1">
+                  Task List
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    ⌘
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    Shift
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    9
+                  </kbd>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div>
+                  <Toggle size="sm" pressed={editor.isActive('blockquote')} onPressedChange={blockQuote}>
+                    <TextQuote className="size-4" />
+                  </Toggle>
+                </div>
               </TooltipTrigger>
               <TooltipContent side="bottom">
                 <div className="flex items-center gap-1">
@@ -276,9 +329,11 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Toggle size="sm" pressed={editor.isActive('codeBlock')} onPressedChange={toggleCodeBlock}>
-                  <Code className="size-4" />
-                </Toggle>
+                <div>
+                  <Toggle size="sm" pressed={editor.isActive('codeBlock')} onPressedChange={toggleCodeBlock}>
+                    <Code className="size-4" />
+                  </Toggle>
+                </div>
               </TooltipTrigger>
               <TooltipContent side="bottom">
                 <div className="flex items-center gap-1">

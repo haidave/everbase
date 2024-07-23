@@ -127,40 +127,175 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
       />
 
       <div className="relative mt-8 grid w-full grid-cols-[1fr_auto_1fr] place-items-center">
-        <Button
-          variant="ghost"
-          type="button"
-          onClick={toggleCount}
-          className="h-max justify-self-start px-2"
-          aria-label={`Toggle between word and character count. Currently showing ${label}.`}
-        >
-          <span className="font-mono text-3xs font-normal text-tertiary">
-            {count || 0} {label}
-          </span>
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                type="button"
+                onClick={toggleCount}
+                className="h-max justify-self-start px-2"
+                aria-label={`Toggle between word and character count. Currently showing ${label}.`}
+              >
+                <span className="font-mono text-3xs font-normal text-tertiary">
+                  {count || 0} {label}
+                </span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Switch to {label === 'characters' ? 'words' : 'characters'}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <div className="flex flex-wrap gap-1 justify-self-center">
-          <Toggle size="sm" pressed={editor.isActive('bold')} onPressedChange={toggleBold}>
-            <Bold className="size-4" />
-          </Toggle>
-          <Toggle size="sm" pressed={editor.isActive('italic')} onPressedChange={toggleItalic}>
-            <Italic className="size-4" />
-          </Toggle>
-          <Toggle size="sm" pressed={editor.isActive('strike')} onPressedChange={toggleStrike}>
-            <Strikethrough className="size-4" />
-          </Toggle>
-          <Toggle size="sm" pressed={editor.isActive('bulletList')} onPressedChange={toggleBulletList}>
-            <List className="size-4" />
-          </Toggle>
-          <Toggle size="sm" pressed={editor.isActive('orderedList')} onPressedChange={toggleOrderedList}>
-            <ListOrdered className="size-4" />
-          </Toggle>
-          <Toggle size="sm" pressed={editor.isActive('blockquote')} onPressedChange={blockQuote}>
-            <TextQuote className="size-4" />
-          </Toggle>
-          <Toggle size="sm" pressed={editor.isActive('codeBlock')} onPressedChange={toggleCodeBlock}>
-            <Code className="size-4" />
-          </Toggle>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Toggle size="sm" pressed={editor.isActive('bold')} onPressedChange={toggleBold}>
+                  <Bold className="size-4" />
+                </Toggle>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <div className="flex items-center gap-1">
+                  Bold
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    ⌘
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    B
+                  </kbd>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Toggle size="sm" pressed={editor.isActive('italic')} onPressedChange={toggleItalic}>
+                  <Italic className="size-4" />
+                </Toggle>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <div className="flex items-center gap-1">
+                  Italic
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    ⌘
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-mono font-medium">
+                    I
+                  </kbd>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Toggle size="sm" pressed={editor.isActive('strike')} onPressedChange={toggleStrike}>
+                  <Strikethrough className="size-4" />
+                </Toggle>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <div className="flex items-center gap-1">
+                  Strikethrough
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    ⌘
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    Shift
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    S
+                  </kbd>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Toggle size="sm" pressed={editor.isActive('orderedList')} onPressedChange={toggleOrderedList}>
+                  <ListOrdered className="size-4" />
+                </Toggle>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <div className="flex items-center gap-1">
+                  Ordered List
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    ⌘
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    Shift
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    7
+                  </kbd>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Toggle size="sm" pressed={editor.isActive('bulletList')} onPressedChange={toggleBulletList}>
+                  <List className="size-4" />
+                </Toggle>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <div className="flex items-center gap-1">
+                  Bullet List
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    ⌘
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    Shift
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    8
+                  </kbd>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Toggle size="sm" pressed={editor.isActive('blockquote')} onPressedChange={blockQuote}>
+                  <TextQuote className="size-4" />
+                </Toggle>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <div className="flex items-center gap-1">
+                  Block Quote
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    ⌘
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    Shift
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    B
+                  </kbd>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Toggle size="sm" pressed={editor.isActive('codeBlock')} onPressedChange={toggleCodeBlock}>
+                  <Code className="size-4" />
+                </Toggle>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <div className="flex items-center gap-1">
+                  Code Block
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    ⌘
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    Alt
+                  </kbd>
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                    C
+                  </kbd>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
 
         {(hasContent() || isSaving) && (

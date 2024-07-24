@@ -114,7 +114,7 @@ export function AddNote() {
                 <FormItem>
                   <FormControl>
                     <RichTextEditor
-                      isSaving={isSaving}
+                      isPending={isSaving}
                       handleOnSubmit={() => {
                         void handleSubmit(onSubmit)()
                       }}

@@ -16,11 +16,13 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modu
 type RichTextEditorProps = {
   onChange: (content: string) => void
   value: string
-  isSaving: boolean
+  isPending?: boolean
+  isEditing?: boolean
+  hasChanges?: boolean
   handleOnSubmit: () => void
 }
 
-const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextEditorProps) => {
+const RichTextEditor = ({ onChange, value, isPending, isEditing, hasChanges, handleOnSubmit }: RichTextEditorProps) => {
   const [showCharCount, setShowCharCount] = useState(false)
 
   const editor = useEditor({
@@ -135,6 +137,8 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
   const hasContent = () => {
     return editor && !editor.isEmpty
   }
+
+  const showSubmitButton = (isEditing && hasChanges) || (!isEditing && hasContent())
 
   return (
     <div className="">
@@ -353,7 +357,7 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
           </TooltipProvider>
         </div>
 
-        {(hasContent() || isSaving) && (
+        {(showSubmitButton || isPending) && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -361,10 +365,10 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
                   variant="shiny"
                   type="submit"
                   onClick={handleOnSubmit}
-                  disabled={isSaving || editor.isEmpty}
+                  disabled={isPending || editor.isEmpty || (isEditing && !hasChanges)}
                   className="justify-self-end"
                 >
-                  {isSaving ? 'Saving...' : 'Save'}
+                  {isPending ? (isEditing ? 'Updating...' : 'Saving...') : isEditing ? 'Update' : 'Save'}
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom">
@@ -377,7 +381,7 @@ const RichTextEditor = ({ onChange, value, isSaving, handleOnSubmit }: RichTextE
                       Enter
                     </kbd>
                   </div>
-                  to save note
+                  to {isEditing ? 'update' : 'save'} note
                 </div>
               </TooltipContent>
             </Tooltip>

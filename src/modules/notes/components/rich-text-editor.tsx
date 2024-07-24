@@ -74,12 +74,12 @@ const RichTextEditor = ({
       TaskItem.configure({
         nested: true,
         HTMLAttributes: {
-          class: 'flex gap-2 items-center [&>div>p]:min-w-px',
+          class: 'flex gap-2 [&>div>p]:min-w-px',
         },
       }),
       TaskList.configure({
         HTMLAttributes: {
-          class: 'pl-0',
+          class: 'pl-0 list-none',
         },
       }),
       Extension.create({
@@ -189,7 +189,7 @@ const RichTextEditor = ({
                 <TooltipTrigger asChild>
                   <div>
                     <Toggle size="sm" pressed={editor.isActive('bold')} onPressedChange={toggleBold}>
-                      <Bold className="size-4" />
+                      <Bold className="size-3.5" />
                     </Toggle>
                   </div>
                 </TooltipTrigger>
@@ -210,7 +210,7 @@ const RichTextEditor = ({
                 <TooltipTrigger asChild>
                   <div>
                     <Toggle size="sm" pressed={editor.isActive('italic')} onPressedChange={toggleItalic}>
-                      <Italic className="size-4" />
+                      <Italic className="size-3.5" />
                     </Toggle>
                   </div>
                 </TooltipTrigger>
@@ -231,7 +231,7 @@ const RichTextEditor = ({
                 <TooltipTrigger asChild>
                   <div>
                     <Toggle size="sm" pressed={editor.isActive('strike')} onPressedChange={toggleStrike}>
-                      <Strikethrough className="size-4" />
+                      <Strikethrough className="size-3.5" />
                     </Toggle>
                   </div>
                 </TooltipTrigger>

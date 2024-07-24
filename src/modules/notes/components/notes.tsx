@@ -12,7 +12,6 @@ import { getGroupedNotes } from '@/modules/notes/lib/actions'
 import { QUERY_KEYS } from '../lib/const'
 import { CopyNoteButton } from './copy-note-button'
 import { EditNoteButton } from './edit-note-button'
-import { RichTextEditor } from './rich-text-editor'
 
 const Notes = () => {
   const popoverContentRef = useRef<HTMLDivElement>(null)
@@ -63,7 +62,17 @@ const Notes = () => {
                   className="rounded-lg text-left focus-visible:shadow-focus focus-visible:outline-0 [&[data-state='open']>li]:bg-primary-active"
                 >
                   <li className="relative rounded-lg bg-primary px-5 py-3 font-mono transition-all duration-150 hover:bg-primary-hover active:bg-primary-active">
-                    <RichTextEditor key={note.id + note.content} value={note.content} isViewOnly />
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: note.content
+                          // Replace empty paragraphs with line breaks
+                          .replace(/<p><\/p>/g, '<br>')
+                          // Disable all inputs
+                          .replace(/<input/g, '<input tabindex="-1"'),
+                      }}
+                      className="pointer-events-none select-none"
+                      aria-readonly="true"
+                    ></div>
                   </li>
                 </PopoverTrigger>
                 <PopoverContent

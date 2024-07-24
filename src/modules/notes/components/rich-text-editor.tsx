@@ -74,7 +74,7 @@ const RichTextEditor = ({
       TaskItem.configure({
         nested: true,
         HTMLAttributes: {
-          class: 'flex gap-2 [&>div>p]:min-w-px',
+          class: 'flex gap-2 [&>div>p]:min-w-px [&>label]:mt-[0.125rem]',
         },
       }),
       TaskList.configure({

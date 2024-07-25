@@ -7,12 +7,14 @@ import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
 import { EditorContent, Extension, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { Bold, Code, Italic, List, ListOrdered, ListTodo, Strikethrough, TextQuote } from 'lucide-react'
+import { Bold, Code, FocusIcon, Italic, List, ListOrdered, ListTodo, Strikethrough, TextQuote } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/modules/design-system/components/button'
 import { Toggle } from '@/modules/design-system/components/toggle'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modules/design-system/components/tooltip'
+
+import { FocusModeExtension } from '../lib/focus-mode'
 
 type RichTextEditorProps = {
   onChange?: (content: string) => void
@@ -33,6 +35,7 @@ const RichTextEditor = ({
   isViewOnly,
   handleOnSubmit,
 }: RichTextEditorProps) => {
+  const [focusModeActive, setFocusModeActive] = useState(false)
   const [showCharCount, setShowCharCount] = useState(false)
 
   const editor = useEditor({
@@ -45,6 +48,7 @@ const RichTextEditor = ({
       },
     },
     extensions: [
+      FocusModeExtension.configure({ isActive: focusModeActive }),
       StarterKit.configure({
         orderedList: {
           HTMLAttributes: {
@@ -101,7 +105,16 @@ const RichTextEditor = ({
     onUpdate({ editor }) {
       onChange?.(editor.getHTML())
     },
+    onCreate({ editor }) {
+      editor.on('focusModeChange', (isActive: boolean) => {
+        setFocusModeActive(isActive)
+      })
+    },
   })
+
+  const toggleFocusMode = useCallback(() => {
+    editor?.chain().focus().setFocusMode(!focusModeActive).run()
+  }, [editor, focusModeActive])
 
   const toggleBold = useCallback(() => {
     editor?.chain().focus().toggleBold().run()
@@ -152,7 +165,7 @@ const RichTextEditor = ({
   const showSubmitButton = (isEditing && hasChanges) || (!isEditing && hasContent())
 
   return (
-    <div className="">
+    <div className="relative">
       <EditorContent
         editor={editor}
         className={cn(
@@ -183,7 +196,7 @@ const RichTextEditor = ({
             </Tooltip>
           </TooltipProvider>
 
-          <div className="flex flex-wrap gap-1 justify-self-center">
+          <div className="flex flex-wrap items-center gap-1 justify-self-center">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -250,6 +263,8 @@ const RichTextEditor = ({
                   </div>
                 </TooltipContent>
               </Tooltip>
+
+              <div className="mx-1 h-6 w-px bg-line" />
 
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -323,6 +338,8 @@ const RichTextEditor = ({
                 </TooltipContent>
               </Tooltip>
 
+              <div className="mx-1 h-6 w-px bg-line" />
+
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div>
@@ -362,10 +379,36 @@ const RichTextEditor = ({
                       ⌘
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                      Alt
+                      ⌥
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
                       C
+                    </kbd>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+
+              <div className="mx-1 h-6 w-px bg-line" />
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div>
+                    <Toggle size="sm" pressed={focusModeActive} onPressedChange={toggleFocusMode}>
+                      <FocusIcon className="size-3.5" />
+                    </Toggle>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <div className="flex items-center gap-1">
+                    Focus Mode
+                    <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                      ⌘
+                    </kbd>
+                    <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                      ⌥
+                    </kbd>
+                    <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                      F
                     </kbd>
                   </div>
                 </TooltipContent>

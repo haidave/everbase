@@ -19,6 +19,7 @@ const CopyNoteButton = ({ content }: CopyNoteButtonProps) => {
 
   const editorConfig = useMemo(
     () => ({
+      immediatelyRender: false,
       extensions: [StarterKit, TaskItem, TaskList],
       content,
       editable: false,

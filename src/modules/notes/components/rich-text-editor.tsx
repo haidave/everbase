@@ -7,7 +7,18 @@ import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
 import { EditorContent, Extension, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { Bold, Code, FocusIcon, Italic, List, ListOrdered, ListTodo, Strikethrough, TextQuote } from 'lucide-react'
+import {
+  Bold,
+  CodeXml,
+  FocusIcon,
+  Italic,
+  List,
+  ListOrdered,
+  ListTodo,
+  SquareCode,
+  Strikethrough,
+  TextQuote,
+} from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/modules/design-system/components/button'
@@ -63,6 +74,11 @@ const RichTextEditor = ({
         blockquote: {
           HTMLAttributes: {
             class: 'border-l-4 border-primary pl-4 text-primary',
+          },
+        },
+        code: {
+          HTMLAttributes: {
+            class: 'bg-primary px-2 py-px text-sm text-[#F76A15] rounded-md font-mono',
           },
         },
         codeBlock: {
@@ -142,6 +158,10 @@ const RichTextEditor = ({
 
   const blockQuote = useCallback(() => {
     editor?.chain().focus().toggleBlockquote().run()
+  }, [editor])
+
+  const toggleCode = useCallback(() => {
+    editor?.chain().focus().toggleCode().run()
   }, [editor])
 
   const toggleCodeBlock = useCallback(() => {
@@ -255,7 +275,7 @@ const RichTextEditor = ({
                       ⌘
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                      Shift
+                      ⇧
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
                       S
@@ -281,7 +301,7 @@ const RichTextEditor = ({
                       ⌘
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                      Shift
+                      ⇧
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
                       7
@@ -305,7 +325,7 @@ const RichTextEditor = ({
                       ⌘
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                      Shift
+                      ⇧
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
                       8
@@ -329,7 +349,7 @@ const RichTextEditor = ({
                       ⌘
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                      Shift
+                      ⇧
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
                       9
@@ -355,7 +375,7 @@ const RichTextEditor = ({
                       ⌘
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                      Shift
+                      ⇧
                     </kbd>
                     <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
                       B
@@ -367,8 +387,29 @@ const RichTextEditor = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div>
+                    <Toggle size="sm" pressed={editor.isActive('code')} onPressedChange={toggleCode}>
+                      <CodeXml className="size-4" />
+                    </Toggle>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <div className="flex items-center gap-1">
+                    Code
+                    <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                      ⌘
+                    </kbd>
+                    <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                      E
+                    </kbd>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div>
                     <Toggle size="sm" pressed={editor.isActive('codeBlock')} onPressedChange={toggleCodeBlock}>
-                      <Code className="size-4" />
+                      <SquareCode className="size-4" />
                     </Toggle>
                   </div>
                 </TooltipTrigger>

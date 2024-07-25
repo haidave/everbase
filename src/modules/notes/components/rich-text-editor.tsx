@@ -61,6 +61,8 @@ const RichTextEditor = ({
     extensions: [
       FocusModeExtension.configure({ isActive: focusModeActive }),
       StarterKit.configure({
+        heading: false,
+        history: false,
         orderedList: {
           HTMLAttributes: {
             class: 'list-decimal pl-4 ml-3',

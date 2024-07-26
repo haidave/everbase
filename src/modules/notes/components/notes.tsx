@@ -61,7 +61,7 @@ const Notes = () => {
                   aria-label="Note actions"
                   className="rounded-lg text-left focus-visible:shadow-focus focus-visible:outline-0 [&[data-state='open']>li]:bg-primary-active"
                 >
-                  <li className="relative rounded-lg bg-primary px-5 py-3 font-mono transition-all duration-150 hover:bg-primary-hover active:bg-primary-active">
+                  <li className="relative rounded-lg bg-primary px-5 py-4 transition-all duration-150 hover:bg-primary-hover active:bg-primary-active">
                     <div
                       dangerouslySetInnerHTML={{
                         __html: note.content

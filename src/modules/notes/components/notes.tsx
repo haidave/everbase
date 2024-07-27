@@ -59,9 +59,9 @@ const Notes = () => {
               <Popover key={note.id}>
                 <PopoverTrigger
                   aria-label="Note actions"
-                  className="rounded-lg text-left focus-visible:shadow-focus focus-visible:outline-0 [&[data-state='open']>li]:bg-primary-active"
+                  className="rounded-lg text-left focus-visible:shadow-focus focus-visible:outline-0 [&[data-state='open']>li]:bg-primary"
                 >
-                  <li className="relative rounded-lg bg-primary px-5 py-4 transition-all duration-150 hover:bg-primary-hover active:bg-primary-active">
+                  <li className="relative rounded-lg bg-subtle px-5 py-4 transition-all duration-150 hover:bg-primary active:bg-primary">
                     <div
                       dangerouslySetInnerHTML={{
                         __html: note.content

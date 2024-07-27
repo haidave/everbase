@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { SquarePenIcon } from 'lucide-react'
+import { PlusIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/modules/design-system/components/button'
@@ -85,8 +85,8 @@ export function AddNote() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" className="size-7 bg-subtle" onClick={() => setIsOpen(true)}>
-              <SquarePenIcon className="size-4" />
+            <Button variant="secondary" size="icon" className="size-14 rounded-full" onClick={() => setIsOpen(true)}>
+              <PlusIcon className="size-7" />
             </Button>
           </TooltipTrigger>
           <TooltipContent>

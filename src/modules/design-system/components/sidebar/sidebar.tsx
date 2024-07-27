@@ -1,8 +1,7 @@
 import Link from 'next/link'
-import { HelpCircleIcon, KeyboardIcon } from 'lucide-react'
+import { HelpCircleIcon, KeyboardIcon, PanelLeftIcon } from 'lucide-react'
 
 import { ROUTES } from '@/config/routes'
-import { AddNote } from '@/modules/notes/components/add-note'
 
 import { Button } from '../button'
 import { SidebarNavigation } from './parts/sidebar-navigation'
@@ -17,7 +16,9 @@ const Sidebar = () => {
             <span className="text-gradient font-logo text-base font-medium">everbase</span>
           </Link>
 
-          <AddNote />
+          <Button variant="ghost" size="icon" className="group size-7">
+            <PanelLeftIcon className="size-4 text-tertiary group-hover:text-primary" />
+          </Button>
         </div>
 
         <SidebarNavigation />

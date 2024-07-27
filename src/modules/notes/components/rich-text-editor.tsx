@@ -75,7 +75,7 @@ const RichTextEditor = ({
         },
         blockquote: {
           HTMLAttributes: {
-            class: 'border-l-4 border-primary pl-4 text-primary',
+            class: 'border-l-4 border-primary pl-4',
           },
         },
         code: {
@@ -96,7 +96,7 @@ const RichTextEditor = ({
       TaskItem.configure({
         nested: true,
         HTMLAttributes: {
-          class: 'flex gap-2 [&>div>p]:min-w-px [&>label]:mt-[0.125rem]',
+          class: 'flex gap-2 [&>div>p]:min-w-px [&>label]:mt-[0.125rem] [&>label>input]:accent-white',
         },
       }),
       TaskList.configure({

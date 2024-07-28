@@ -6,6 +6,7 @@ import { isToday, isYesterday, parse } from 'date-fns'
 
 import { type GroupedNotes } from '@/modules/api/types'
 import { Popover, PopoverContent, PopoverTrigger } from '@/modules/design-system/components/popover'
+import { TooltipProvider } from '@/modules/design-system/components/tooltip'
 import { DeleteNoteButton } from '@/modules/notes/components/delete-note-button'
 import { getGroupedNotes } from '@/modules/notes/lib/actions'
 
@@ -50,8 +51,8 @@ const Notes = () => {
     <div className="grid gap-10 pb-12">
       {Object.entries(groupedNotes).map(([date, notes]) => (
         <div key={date} className="relative">
-          <div className="absolute right-full mr-10 flex items-center gap-2">
-            <span className="text-nowrap text-label">{formatDate(date)}</span>
+          <div className="absolute right-full mr-10 flex items-center gap-2 text-sm">
+            <span className="text-nowrap font-mono text-label">{formatDate(date)}</span>
             <span className="text-secondary">{notes.length}</span>
           </div>
           <ul className="grid gap-4">
@@ -59,9 +60,9 @@ const Notes = () => {
               <Popover key={note.id}>
                 <PopoverTrigger
                   aria-label="Note actions"
-                  className="rounded-lg text-left focus-visible:shadow-focus focus-visible:outline-0 [&[data-state='open']>li]:bg-primary"
+                  className="rounded-md text-left focus-visible:shadow-focus focus-visible:outline-0 [&[data-state='open']>li]:bg-primary"
                 >
-                  <li className="relative rounded-lg bg-subtle px-5 py-4 transition-all duration-150 hover:bg-primary active:bg-primary">
+                  <li className="relative rounded-md bg-subtle px-5 py-4 transition-all duration-150 hover:bg-primary active:bg-primary">
                     <div
                       dangerouslySetInnerHTML={{
                         __html: note.content
@@ -70,7 +71,7 @@ const Notes = () => {
                           // Disable all inputs
                           .replace(/<input/g, '<input tabindex="-1"'),
                       }}
-                      className="pointer-events-none select-none"
+                      className="pointer-events-none select-none font-mono text-sm leading-relaxed"
                       aria-readonly="true"
                     ></div>
                   </li>
@@ -87,9 +88,11 @@ const Notes = () => {
                     popoverContentRef.current?.focus()
                   }}
                 >
-                  <EditNoteButton note={note} />
-                  <CopyNoteButton content={note.content} />
-                  <DeleteNoteButton noteId={note.id} />
+                  <TooltipProvider delayDuration={300}>
+                    <EditNoteButton note={note} />
+                    <CopyNoteButton content={note.content} />
+                    <DeleteNoteButton noteId={note.id} />
+                  </TooltipProvider>
                 </PopoverContent>
               </Popover>
             ))}

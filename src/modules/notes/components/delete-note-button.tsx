@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CheckIcon, Loader2Icon, TrashIcon, XIcon } from 'lucide-react'
 
 import { Button } from '@/modules/design-system/components/button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modules/design-system/components/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/modules/design-system/components/tooltip'
 import { deleteNote } from '@/modules/notes/lib/actions'
 
 import { QUERY_KEYS } from '../lib/const'
@@ -73,65 +73,59 @@ export function DeleteNoteButton({ noteId }: DeleteNoteButtonProps) {
           <Loader2Icon className="size-4 animate-spin text-green-500" />
         </Button>
       ) : !showConfirm ? (
-        <TooltipProvider delayDuration={300}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleDelete}
+              disabled={mutation.isPending}
+              ref={trashButtonRef}
+              aria-label="Delete note"
+            >
+              <TrashIcon className="size-4" />
+            </Button>
+          </TooltipTrigger>
+
+          <TooltipContent side="bottom">
+            <p className="flex items-center gap-1.5">
+              Delete note{' '}
+              <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                D
+              </kbd>
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        <div className="flex gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={handleDelete}
-                disabled={mutation.isPending}
-                ref={trashButtonRef}
-                aria-label="Delete note"
+                onClick={confirmDelete}
+                ref={confirmButtonRef}
+                aria-label="Confirm delete"
               >
-                <TrashIcon className="size-4" />
+                <CheckIcon className="size-4 text-green-500" />
               </Button>
             </TooltipTrigger>
 
             <TooltipContent side="bottom">
-              <p className="flex items-center gap-1.5">
-                Delete note{' '}
-                <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                  D
-                </kbd>
-              </p>
+              <p>Confirm delete</p>
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
-      ) : (
-        <div className="flex gap-2">
-          <TooltipProvider delayDuration={300}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={confirmDelete}
-                  ref={confirmButtonRef}
-                  aria-label="Confirm delete"
-                >
-                  <CheckIcon className="size-4 text-green-500" />
-                </Button>
-              </TooltipTrigger>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon" onClick={cancelDelete} aria-label="Cancel delete">
+                <XIcon className="size-4 text-red-500" />
+              </Button>
+            </TooltipTrigger>
 
-              <TooltipContent side="bottom">
-                <p>Confirm delete</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider delayDuration={300}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" onClick={cancelDelete} aria-label="Cancel delete">
-                  <XIcon className="size-4 text-red-500" />
-                </Button>
-              </TooltipTrigger>
-
-              <TooltipContent side="bottom">
-                <p>Cancel delete</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+            <TooltipContent side="bottom">
+              <p>Cancel delete</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       )}
     </>

@@ -5,7 +5,7 @@ import { PencilIcon } from 'lucide-react'
 
 import { type Note } from '@/modules/api/types'
 import { Button } from '@/modules/design-system/components/button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modules/design-system/components/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/modules/design-system/components/tooltip'
 
 import { EditNote } from './edit-note'
 
@@ -39,23 +39,21 @@ export function EditNoteButton({ note }: EditNoteButtonProps) {
 
   return (
     <>
-      <TooltipProvider delayDuration={300}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)}>
-              <PencilIcon className="size-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">
-            <p className="flex items-center gap-1.5">
-              Edit note{' '}
-              <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                E
-              </kbd>
-            </p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)}>
+            <PencilIcon className="size-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          <p className="flex items-center gap-1.5">
+            Edit note{' '}
+            <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+              E
+            </kbd>
+          </p>
+        </TooltipContent>
+      </Tooltip>
       {isOpen && <EditNote isOpen={isOpen} setIsOpen={setIsOpen} initialNote={note} />}
     </>
   )

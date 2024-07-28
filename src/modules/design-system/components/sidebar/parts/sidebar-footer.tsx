@@ -82,9 +82,9 @@ const SidebarFooter = ({ isCollapsed }: SidebarFooterProps) => {
         <DropdownMenuContent side="right">
           {userEmail && <DropdownMenuLabel className="font-normal">{userEmail}</DropdownMenuLabel>}
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <form action={handleSignOut}>
-              <button className="flex items-center gap-2">
+          <DropdownMenuItem className="p-0">
+            <form action={handleSignOut} className="size-full">
+              <button className="flex size-full items-center gap-2 px-2 py-1.5">
                 <LogOutIcon className="size-3.5 text-tertiary transition-colors duration-150 group-hover:text-primary" />
                 <span>Sign Out</span>
               </button>

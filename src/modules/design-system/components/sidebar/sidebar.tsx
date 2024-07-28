@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useSidebarStore } from '@/store/sidebar-store'
 import { motion } from 'framer-motion'
 import { PanelLeftIcon } from 'lucide-react'
 
@@ -14,15 +15,15 @@ import { SidebarFooter } from './parts/sidebar-footer'
 import { SidebarNavigation } from './parts/sidebar-navigation'
 
 const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false)
-  const [isClient, setIsClient] = useState(false)
+  const { isCollapsed, toggleCollapsed } = useSidebarStore()
+  const [isMounted, setIsMounted] = useState(false)
 
   const toggleSidebar = useCallback(() => {
-    setIsCollapsed((prev) => !prev)
-  }, [])
+    toggleCollapsed()
+  }, [toggleCollapsed])
 
   useEffect(() => {
-    setIsClient(true)
+    setIsMounted(true)
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === '[') {
@@ -47,7 +48,7 @@ const Sidebar = () => {
       >
         <div className={cn(isCollapsed ? 'px-2' : 'px-4', 'flex h-full flex-col overflow-hidden py-2')}>
           <div className={cn(isCollapsed ? 'justify-center' : 'justify-between', 'flex items-center')}>
-            {(!isCollapsed || !isClient) && (
+            {(!isCollapsed || !isMounted) && (
               <motion.div
                 initial={{ opacity: 1 }}
                 animate={{ opacity: isCollapsed ? 0 : 1 }}

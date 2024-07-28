@@ -80,7 +80,7 @@ const Notes = () => {
                   side="right"
                   sideOffset={12}
                   align="start"
-                  className="flex gap-1 rounded-md border border-line bg-subtle"
+                  className="flex gap-1 rounded-md border border-line bg-subtle p-1"
                   onOpenAutoFocus={(e) => {
                     e.preventDefault()
                     popoverContentRef.current?.setAttribute('tabindex', '-1')

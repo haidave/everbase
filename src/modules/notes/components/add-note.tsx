@@ -86,7 +86,7 @@ export function AddNote() {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button variant="secondary" size="icon" className="size-14 rounded-full" onClick={() => setIsOpen(true)}>
-              <PlusIcon className="size-7" />
+              <PlusIcon className="size-6" />
             </Button>
           </TooltipTrigger>
           <TooltipContent>

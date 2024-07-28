@@ -1,42 +1,92 @@
+'use client'
+
+import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { HelpCircleIcon, KeyboardIcon, PanelLeftIcon } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { PanelLeftIcon } from 'lucide-react'
 
 import { ROUTES } from '@/config/routes'
+import { cn } from '@/lib/utils'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modules/design-system/components/tooltip'
 
 import { Button } from '../button'
+import { SidebarFooter } from './parts/sidebar-footer'
 import { SidebarNavigation } from './parts/sidebar-navigation'
-import { SidebarUser } from './parts/sidebar-user'
 
 const Sidebar = () => {
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+
+  const toggleSidebar = useCallback(() => {
+    setIsCollapsed((prev) => !prev)
+  }, [])
+
+  useEffect(() => {
+    setIsClient(true)
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === '[') {
+        toggleSidebar()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [toggleSidebar])
+
   return (
-    <aside className="sticky left-0 top-0 z-40 block h-svh bg-app xl:block">
-      <div className="flex h-full w-60 flex-col overflow-auto p-4 pb-2">
-        <div className="flex items-center justify-between">
-          <Link href={ROUTES.home} className="rounded-md focus-visible:shadow-focus focus-visible:outline-0">
-            <span className="text-gradient font-logo text-base font-medium">everbase</span>
-          </Link>
+    <TooltipProvider>
+      <motion.aside
+        className="sticky left-0 top-0 z-40 block h-svh bg-app xl:block"
+        initial={false}
+        animate={{ width: isCollapsed ? '4rem' : '15rem' }}
+        transition={{ duration: 0.15 }}
+      >
+        <div className={cn(isCollapsed ? 'px-2' : 'px-4', 'flex h-full flex-col overflow-hidden py-2')}>
+          <div className={cn(isCollapsed ? 'justify-center' : 'justify-between', 'flex items-center')}>
+            {(!isCollapsed || !isClient) && (
+              <motion.div
+                initial={{ opacity: 1 }}
+                animate={{ opacity: isCollapsed ? 0 : 1 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Link href={ROUTES.home} className="rounded-md focus-visible:shadow-focus focus-visible:outline-0">
+                  <span className="text-gradient font-logo text-base font-medium">everbase</span>
+                </Link>
+              </motion.div>
+            )}
 
-          <Button variant="ghost" size="icon" className="group size-7">
-            <PanelLeftIcon className="size-4 text-tertiary group-hover:text-primary" />
-          </Button>
-        </div>
-
-        <SidebarNavigation />
-
-        <div className="mt-auto flex items-center justify-between pt-8">
-          <div className="flex gap-3">
-            <Button variant="ghost" size="icon" className="group size-7">
-              <HelpCircleIcon className="size-4 text-tertiary group-hover:text-primary" />
-            </Button>
-            <Button variant="ghost" size="icon" className="group size-7">
-              <KeyboardIcon className="size-4 text-tertiary group-hover:text-primary" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size={isCollapsed ? 'sidebar' : 'icon'}
+                  className={cn(!isCollapsed && 'ml-auto', 'group')}
+                  onClick={toggleSidebar}
+                >
+                  <PanelLeftIcon className="size-4 text-tertiary group-hover:text-primary" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p className="flex items-center gap-1.5">
+                  {isCollapsed ? 'Expand' : 'Collapse'} sidebar{' '}
+                  <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover pl-0.5 pr-1 font-mono font-medium">
+                    {'['}
+                  </kbd>
+                </p>
+              </TooltipContent>
+            </Tooltip>
           </div>
 
-          <SidebarUser />
+          <SidebarNavigation isCollapsed={isCollapsed} />
+
+          <SidebarFooter isCollapsed={isCollapsed} />
         </div>
-      </div>
-    </aside>
+      </motion.aside>
+    </TooltipProvider>
   )
 }
 

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { SidebarNavigationLink } from './sidebar-navigation-link'
 
 type SidebarNavigationProps = {
-  isCollapsed: boolean
+  isCollapsed?: boolean
 }
 
 const SidebarNavigation = ({ isCollapsed }: SidebarNavigationProps) => {

@@ -85,7 +85,7 @@ export function AddNote() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="secondary" size="icon" className="size-14 rounded-full" onClick={() => setIsOpen(true)}>
+            <Button variant="secondary" size="icon" className="size-12 rounded-full" onClick={() => setIsOpen(true)}>
               <PlusIcon className="size-6" />
             </Button>
           </TooltipTrigger>
@@ -100,7 +100,7 @@ export function AddNote() {
         </Tooltip>
       </TooltipProvider>
 
-      <DialogContent className="grid gap-2 focus:outline-none sm:max-w-3xl">
+      <DialogContent className="grid -translate-y-1/4 gap-2 focus:outline-none max-md:top-1/4 sm:max-w-3xl">
         <DialogTitle className="sr-only">Create new note</DialogTitle>
         <DialogDescription className="sr-only">
           Click save to create a new note. Press escape to cancel.

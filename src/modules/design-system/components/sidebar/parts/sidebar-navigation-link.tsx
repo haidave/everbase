@@ -13,7 +13,7 @@ type SidebarNavigationLinkProps = {
   label: string
   isExternal?: boolean
   isButton?: boolean
-  isCollapsed: boolean
+  isCollapsed?: boolean
 }
 
 const SidebarNavigationLink = ({ href, icon, label, isExternal, isCollapsed }: SidebarNavigationLinkProps) => {

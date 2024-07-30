@@ -1,19 +1,18 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 import { PencilIcon } from 'lucide-react'
 
 import { type Note } from '@/modules/api/types'
 import { Button } from '@/modules/design-system/components/button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modules/design-system/components/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/modules/design-system/components/tooltip'
 
 import { EditNote } from './edit-note'
 
 interface EditNoteButtonProps {
   note: Note
+  closePopover: () => void
 }
 
-export function EditNoteButton({ note }: EditNoteButtonProps) {
+export function EditNoteButton({ note, closePopover }: EditNoteButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -37,26 +36,32 @@ export function EditNoteButton({ note }: EditNoteButtonProps) {
     }
   }, [isOpen, setIsOpen])
 
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open)
+
+    if (!open) {
+      closePopover()
+    }
+  }
+
   return (
     <>
-      <TooltipProvider delayDuration={300}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)}>
-              <PencilIcon className="size-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">
-            <p className="flex items-center gap-1.5">
-              Edit note{' '}
-              <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                E
-              </kbd>
-            </p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-      {isOpen && <EditNote isOpen={isOpen} setIsOpen={setIsOpen} initialNote={note} />}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)}>
+            <PencilIcon className="size-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          <p className="flex items-center gap-1.5">
+            Edit note{' '}
+            <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+              E
+            </kbd>
+          </p>
+        </TooltipContent>
+      </Tooltip>
+      {isOpen && <EditNote isOpen={isOpen} setIsOpen={handleOpenChange} initialNote={note} />}
     </>
   )
 }

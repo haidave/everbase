@@ -19,7 +19,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/modules/design-system/components/tooltip'
 
 type SidebarFooterProps = {
-  isCollapsed: boolean
+  isCollapsed?: boolean
 }
 
 const SidebarFooter = ({ isCollapsed }: SidebarFooterProps) => {

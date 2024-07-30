@@ -41,7 +41,7 @@ const Sidebar = () => {
   return (
     <TooltipProvider>
       <motion.aside
-        className="sticky left-0 top-0 z-40 block h-svh bg-app xl:block"
+        className="sticky left-0 top-0 z-40 hidden h-svh bg-app lg:block"
         initial={false}
         animate={{ width: isCollapsed ? '4rem' : '15rem' }}
         transition={{ duration: 0.15 }}

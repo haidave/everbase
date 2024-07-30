@@ -6,7 +6,7 @@ import StarterKit from '@tiptap/starter-kit'
 import { CheckIcon, CopyIcon } from 'lucide-react'
 
 import { Button } from '@/modules/design-system/components/button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modules/design-system/components/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/modules/design-system/components/tooltip'
 
 type CopyNoteButtonProps = {
   content: string
@@ -90,33 +90,31 @@ const CopyNoteButton = ({ content }: CopyNoteButtonProps) => {
       <div className="hidden">
         <EditorContent editor={editor} />
       </div>
-      <TooltipProvider delayDuration={300}>
-        <Tooltip open={showTooltip} onOpenChange={setShowTooltip}>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleCopyToClipboard}
-              ref={buttonRef}
-              aria-label={isCopied ? 'Copied to clipboard' : 'Copy note'}
-            >
-              {isCopied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">
-            {isCopied ? (
-              <p>Copied!</p>
-            ) : (
-              <p className="flex items-center gap-1.5">
-                Copy note{' '}
-                <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                  C
-                </kbd>
-              </p>
-            )}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip open={showTooltip} onOpenChange={setShowTooltip}>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleCopyToClipboard}
+            ref={buttonRef}
+            aria-label={isCopied ? 'Copied to clipboard' : 'Copy note'}
+          >
+            {isCopied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          {isCopied ? (
+            <p>Copied!</p>
+          ) : (
+            <p className="flex items-center gap-1.5">
+              Copy note{' '}
+              <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                C
+              </kbd>
+            </p>
+          )}
+        </TooltipContent>
+      </Tooltip>
     </>
   )
 }

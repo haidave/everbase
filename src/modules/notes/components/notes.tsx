@@ -1,9 +1,10 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { isToday, isYesterday, parse } from 'date-fns'
 
+import { useResize } from '@/hooks/use-resize'
 import { type GroupedNotes } from '@/modules/api/types'
 import { Popover, PopoverContent, PopoverTrigger } from '@/modules/design-system/components/popover'
 import { TooltipProvider } from '@/modules/design-system/components/tooltip'
@@ -15,6 +16,8 @@ import { CopyNoteButton } from './copy-note-button'
 import { EditNoteButton } from './edit-note-button'
 
 const Notes = () => {
+  const { width } = useResize()
+  const [openPopoverId, setOpenPopoverId] = useState<string | null>(null)
   const popoverContentRef = useRef<HTMLDivElement>(null)
 
   const {
@@ -47,17 +50,25 @@ const Notes = () => {
     return dateString
   }
 
+  const closePopover = () => {
+    setOpenPopoverId(null)
+  }
+
   return (
-    <div className="grid gap-10 pb-12">
+    <div className="grid gap-8 pb-12 lg:gap-10">
       {Object.entries(groupedNotes).map(([date, notes]) => (
         <div key={date} className="relative">
-          <div className="absolute right-full mr-10 flex items-center gap-2 text-sm">
+          <div className="flex items-center gap-2 text-sm lg:absolute lg:right-full lg:mr-10">
             <span className="text-nowrap font-mono text-label">{formatDate(date)}</span>
             <span className="text-secondary">{notes.length}</span>
           </div>
-          <ul className="grid gap-4">
+          <ul className="grid gap-4 max-lg:mt-3">
             {notes.map((note) => (
-              <Popover key={note.id}>
+              <Popover
+                key={note.id}
+                open={openPopoverId === note.id}
+                onOpenChange={(open) => setOpenPopoverId(open ? note.id : null)}
+              >
                 <PopoverTrigger
                   aria-label="Note actions"
                   className="rounded-md text-left focus-visible:shadow-focus focus-visible:outline-0 [&[data-state='open']>li]:bg-primary"
@@ -78,9 +89,9 @@ const Notes = () => {
                 </PopoverTrigger>
                 <PopoverContent
                   ref={popoverContentRef}
-                  side="right"
+                  side={width < 1024 ? 'top' : 'right'}
                   sideOffset={12}
-                  align="start"
+                  align={width < 1024 ? 'end' : 'start'}
                   className="flex gap-1 rounded-md border border-line bg-subtle p-1"
                   onOpenAutoFocus={(e) => {
                     e.preventDefault()
@@ -89,7 +100,7 @@ const Notes = () => {
                   }}
                 >
                   <TooltipProvider delayDuration={300}>
-                    <EditNoteButton note={note} />
+                    <EditNoteButton note={note} closePopover={closePopover} />
                     <CopyNoteButton content={note.content} />
                     <DeleteNoteButton noteId={note.id} />
                   </TooltipProvider>

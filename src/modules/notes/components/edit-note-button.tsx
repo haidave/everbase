@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 import { PencilIcon } from 'lucide-react'
 
@@ -11,9 +9,10 @@ import { EditNote } from './edit-note'
 
 interface EditNoteButtonProps {
   note: Note
+  closePopover: () => void
 }
 
-export function EditNoteButton({ note }: EditNoteButtonProps) {
+export function EditNoteButton({ note, closePopover }: EditNoteButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -37,6 +36,14 @@ export function EditNoteButton({ note }: EditNoteButtonProps) {
     }
   }, [isOpen, setIsOpen])
 
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open)
+
+    if (!open) {
+      closePopover()
+    }
+  }
+
   return (
     <>
       <Tooltip>
@@ -54,7 +61,7 @@ export function EditNoteButton({ note }: EditNoteButtonProps) {
           </p>
         </TooltipContent>
       </Tooltip>
-      {isOpen && <EditNote isOpen={isOpen} setIsOpen={setIsOpen} initialNote={note} />}
+      {isOpen && <EditNote isOpen={isOpen} setIsOpen={handleOpenChange} initialNote={note} />}
     </>
   )
 }

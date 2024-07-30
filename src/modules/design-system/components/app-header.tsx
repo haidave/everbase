@@ -41,7 +41,7 @@ const AppHeader = () => {
                 <PanelLeftIcon className="size-4 text-tertiary group-hover:text-primary" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-60 px-4 py-2">
+            <SheetContent side="left" className="w-60 rounded-r-lg px-4 py-2">
               <div className="flex h-full flex-col overflow-auto">
                 <div className="flex items-center justify-between">
                   <Link href={ROUTES.home} className="rounded-md focus-visible:shadow-focus focus-visible:outline-0">

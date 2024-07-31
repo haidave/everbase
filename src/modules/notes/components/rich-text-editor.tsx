@@ -193,7 +193,7 @@ const RichTextEditor = ({
         className={cn(
           isViewOnly
             ? 'pointer-events-none'
-            : 'textarea-scrollbar max-h-[calc(75svh-4rem)] overflow-y-auto bg-base px-6 pt-3 font-mono leading-relaxed focus:outline-none'
+            : 'textarea-scrollbar max-h-[calc(25svh)] overflow-y-auto bg-base pt-3 font-mono leading-relaxed focus:outline-none md:max-h-[calc(75svh-4rem)] md:px-6'
         )}
       />
 

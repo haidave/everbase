@@ -71,7 +71,7 @@ export function EditNote({ isOpen, setIsOpen, initialNote }: EditNoteProps) {
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent
-        className="grid -translate-y-1/4 gap-2 focus:outline-none max-md:top-1/4 sm:max-w-3xl"
+        className="grid gap-2 focus:outline-none max-md:top-1/4 max-md:-translate-y-1/4 sm:max-w-3xl"
         data-edit-dialog
       >
         <DialogTitle className="sr-only">Edit note</DialogTitle>

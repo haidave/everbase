@@ -34,12 +34,15 @@ const AppHeader = () => {
   return (
     <TooltipProvider>
       <header className="sticky top-0 z-50 h-10 border-b-[0.75px] border-line bg-transparent backdrop-blur-md lg:hidden">
-        <nav className="flex size-full w-screen items-center gap-1 px-4">
+        <nav className="flex size-full w-screen items-center px-4">
           <Sheet open={isSheetOpen} onOpenChange={(isOpen) => setSheetOpen(isOpen)}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <PanelLeftIcon className="size-4 text-tertiary group-hover:text-primary" />
-              </Button>
+              <div className="flex items-center gap-1">
+                <Button variant="ghost" size="icon">
+                  <PanelLeftIcon className="size-4 text-tertiary group-hover:text-primary" />
+                </Button>
+                <span className="text-2sm font-medium">{formattedPathname}</span>
+              </div>
             </SheetTrigger>
             <SheetContent side="left" className="w-60 rounded-r-lg px-4 py-2">
               <div className="flex h-full flex-col overflow-auto">
@@ -59,7 +62,6 @@ const AppHeader = () => {
               </div>
             </SheetContent>
           </Sheet>
-          <span className="text-2sm font-medium">{formattedPathname}</span>
         </nav>
       </header>
     </TooltipProvider>

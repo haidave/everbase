@@ -96,7 +96,7 @@ const RichTextEditor = ({
       TaskItem.configure({
         nested: true,
         HTMLAttributes: {
-          class: 'flex gap-2 [&>div>p]:min-w-px [&>label]:mt-[0.125rem]',
+          class: 'flex gap-2 [&>div>p]:min-w-px',
         },
       }),
       TaskList.configure({
@@ -193,12 +193,12 @@ const RichTextEditor = ({
         className={cn(
           isViewOnly
             ? 'pointer-events-none'
-            : 'textarea-scrollbar max-h-[calc(75svh-4rem)] overflow-y-auto bg-base px-6 pt-3 font-mono leading-relaxed focus:outline-none'
+            : 'textarea-scrollbar max-h-[calc(25svh)] overflow-y-auto bg-base pr-2 pt-2 font-mono leading-relaxed focus:outline-none md:max-h-[calc(75svh-4rem)]'
         )}
       />
 
       {!isViewOnly && (
-        <div className="relative mt-8 grid w-full grid-cols-3 place-items-center gap-4 sm:grid-cols-[1fr_auto_1fr]">
+        <div className="relative mt-8 grid w-full grid-cols-2 place-items-end gap-4 sm:grid-cols-[1fr_auto_1fr] sm:place-items-center">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -206,7 +206,7 @@ const RichTextEditor = ({
                   variant="ghost"
                   type="button"
                   onClick={toggleCount}
-                  className="h-max justify-self-start px-2"
+                  className="col-start-1 row-start-2 -ml-2 h-max justify-self-start px-2 sm:col-start-1 sm:row-start-1"
                   aria-label={`Toggle between word and character count. Currently showing ${label}.`}
                 >
                   <span className="font-mono text-3xs font-normal text-tertiary">
@@ -218,8 +218,8 @@ const RichTextEditor = ({
             </Tooltip>
           </TooltipProvider>
 
-          <div className="hide-scrollbar overflow-x-auto max-sm:w-[8.125rem]">
-            <div className="flex min-w-max items-center gap-1 justify-self-center">
+          <div className="hide-scrollbar relative col-span-2 row-start-1 flex w-full overflow-x-auto sm:col-span-1 sm:col-start-2 sm:row-start-1 sm:w-auto">
+            <div className="mx-auto flex min-w-max items-center gap-1 justify-self-center">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -461,36 +461,37 @@ const RichTextEditor = ({
             </div>
           </div>
 
-          {(showSubmitButton || isPending) && (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="shiny"
-                    type="submit"
-                    onClick={handleOnSubmit}
-                    disabled={isPending || editor.isEmpty || (isEditing && !hasChanges)}
-                    className="justify-self-end"
-                  >
-                    {isPending ? (isEditing ? 'Updating...' : 'Saving...') : isEditing ? 'Update' : 'Save'}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  <div className="flex items-center gap-1.5">
-                    <div className="flex items-center gap-1">
-                      <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                        ⌘
-                      </kbd>
-                      <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                        Enter
-                      </kbd>
+          <div className="col-start-2 row-start-2 h-8 justify-self-end sm:col-start-3 sm:row-start-1">
+            {(showSubmitButton || isPending) && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="shiny"
+                      type="submit"
+                      onClick={handleOnSubmit}
+                      disabled={isPending || editor.isEmpty || (isEditing && !hasChanges)}
+                    >
+                      {isPending ? (isEditing ? 'Updating...' : 'Saving...') : isEditing ? 'Update' : 'Save'}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1">
+                        <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                          ⌘
+                        </kbd>
+                        <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                          Enter
+                        </kbd>
+                      </div>
+                      to {isEditing ? 'update' : 'save'} note
                     </div>
-                    to {isEditing ? 'update' : 'save'} note
-                  </div>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
+          </div>
         </div>
       )}
     </div>

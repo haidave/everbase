@@ -100,7 +100,7 @@ export function AddNote() {
         </Tooltip>
       </TooltipProvider>
 
-      <DialogContent className="grid gap-2 focus:outline-none max-md:top-1/4 max-md:-translate-y-1/4 sm:max-w-3xl">
+      <DialogContent className="grid gap-2 focus:outline-none max-md:top-1/4 max-md:-translate-y-1/4 sm:max-w-3xl md:px-8">
         <DialogTitle className="sr-only">Create new note</DialogTitle>
         <DialogDescription className="sr-only">
           Click save to create a new note. Press escape to cancel.

@@ -65,12 +65,12 @@ const RichTextEditor = ({
         history: false,
         orderedList: {
           HTMLAttributes: {
-            class: 'list-decimal pl-4 ml-3',
+            class: 'list-decimal pl-4 ml-6',
           },
         },
         bulletList: {
           HTMLAttributes: {
-            class: 'list-disc pl-4',
+            class: 'list-disc pl-6 ml-2 [&>li]:pl-2',
           },
         },
         blockquote: {
@@ -193,7 +193,7 @@ const RichTextEditor = ({
         className={cn(
           isViewOnly
             ? 'pointer-events-none'
-            : 'textarea-scrollbar max-h-[calc(25svh)] overflow-y-auto bg-base pr-2 pt-2 font-mono leading-relaxed focus:outline-none md:max-h-[calc(75svh-4rem)]'
+            : 'textarea-scrollbar max-h-[calc(25svh)] overflow-y-auto bg-base px-2 pt-2 font-mono leading-relaxed focus:outline-none md:max-h-[calc(75svh-4rem)]'
         )}
       />
 

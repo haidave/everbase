@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CheckIcon, Loader2Icon, TrashIcon, XIcon } from 'lucide-react'
 
@@ -16,8 +16,6 @@ interface DeleteNoteButtonProps {
 
 export function DeleteNoteButton({ noteId }: DeleteNoteButtonProps) {
   const [showConfirm, setShowConfirm] = useState(false)
-  const trashButtonRef = useRef<HTMLButtonElement>(null)
-  const confirmButtonRef = useRef<HTMLButtonElement>(null)
 
   const queryClient = useQueryClient()
 
@@ -30,8 +28,6 @@ export function DeleteNoteButton({ noteId }: DeleteNoteButtonProps) {
 
   const handleDelete = useCallback(() => {
     setShowConfirm(true)
-    // Focus the confirm button after a short delay to ensure it's rendered
-    setTimeout(() => confirmButtonRef.current?.focus(), 0)
   }, [])
 
   const confirmDelete = useCallback(() => {
@@ -43,8 +39,6 @@ export function DeleteNoteButton({ noteId }: DeleteNoteButtonProps) {
 
   const cancelDelete = useCallback(() => {
     setShowConfirm(false)
-    // Focus the trash button after a short delay to ensure the state has updated
-    setTimeout(() => trashButtonRef.current?.focus(), 0)
   }, [])
 
   useEffect(() => {
@@ -80,7 +74,6 @@ export function DeleteNoteButton({ noteId }: DeleteNoteButtonProps) {
               size="icon"
               onClick={handleDelete}
               disabled={mutation.isPending}
-              ref={trashButtonRef}
               aria-label="Delete note"
             >
               <TrashIcon className="size-4" />
@@ -100,13 +93,7 @@ export function DeleteNoteButton({ noteId }: DeleteNoteButtonProps) {
         <div className="flex gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={confirmDelete}
-                ref={confirmButtonRef}
-                aria-label="Confirm delete"
-              >
+              <Button variant="ghost" size="icon" onClick={confirmDelete} aria-label="Confirm delete">
                 <CheckIcon className="size-4 text-green-500" />
               </Button>
             </TooltipTrigger>

@@ -6,7 +6,14 @@ import { usePathname } from 'next/navigation'
 import { PanelLeftIcon } from 'lucide-react'
 
 import { ROUTES } from '@/config/routes'
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/modules/design-system/components/sheet'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from '@/modules/design-system/components/sheet'
 
 import { Button } from './button'
 import { SidebarFooter } from './sidebar/parts/sidebar-footer'
@@ -33,8 +40,8 @@ const AppHeader = () => {
 
   return (
     <TooltipProvider>
-      <header className="sticky top-0 z-50 h-10 border-b-[0.75px] border-line bg-transparent backdrop-blur-md lg:hidden">
-        <nav className="flex size-full w-screen items-center px-4">
+      <header className="sticky top-0 z-50 h-10 w-full border-b-[0.75px] border-line bg-base/95 backdrop-blur supports-[backdrop-filter]:bg-base/60 lg:hidden">
+        <nav className="flex size-full items-center px-4">
           <Sheet open={isSheetOpen} onOpenChange={(isOpen) => setSheetOpen(isOpen)}>
             <SheetTrigger asChild>
               <div className="flex items-center gap-1">
@@ -45,6 +52,8 @@ const AppHeader = () => {
               </div>
             </SheetTrigger>
             <SheetContent side="left" className="w-60 rounded-r-lg px-4 py-2">
+              <SheetTitle className="sr-only">Open sidebar / {formattedPathname}</SheetTitle>
+              <SheetDescription className="sr-only">Click to open sidebar.</SheetDescription>
               <div className="flex h-full flex-col overflow-auto">
                 <div className="flex items-center justify-between">
                   <Link href={ROUTES.home} className="rounded-md focus-visible:shadow-focus focus-visible:outline-0">

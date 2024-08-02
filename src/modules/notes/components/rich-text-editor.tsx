@@ -96,12 +96,12 @@ const RichTextEditor = ({
       TaskItem.configure({
         nested: true,
         HTMLAttributes: {
-          class: 'flex gap-2 [&>div>p]:min-w-px',
+          class: 'flex gap-2 [&>div>p]:min-w-px [&>div]:pl-2',
         },
       }),
       TaskList.configure({
         HTMLAttributes: {
-          class: 'pl-0 list-none',
+          class: 'pl-2 list-none',
         },
       }),
       Extension.create({

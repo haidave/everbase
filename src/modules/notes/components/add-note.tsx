@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 
+import { scrollMainToTop } from '@/lib/utils'
 import { Button } from '@/modules/design-system/components/button'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/modules/design-system/components/dialog'
 import { Form, FormControl, FormField, FormItem } from '@/modules/design-system/components/form'
@@ -34,6 +35,9 @@ export function AddNote() {
       reset()
       setIsSaving(false)
       setIsOpen(false)
+      setTimeout(() => {
+        scrollMainToTop()
+      }, 300)
     },
     onError: () => {
       setIsSaving(false)

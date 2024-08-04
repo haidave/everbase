@@ -43,22 +43,21 @@ export function DeleteNoteButton({ noteId }: DeleteNoteButtonProps) {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === 'd' &&
-        !event.metaKey &&
-        !event.ctrlKey &&
-        !showConfirm &&
-        !document.querySelector('[data-edit-dialog]')
-      ) {
+      if (event.key === 'd' && !event.metaKey && !event.ctrlKey && !document.querySelector('[data-edit-dialog]')) {
         event.preventDefault()
         event.stopPropagation()
-        handleDelete()
+
+        if (!showConfirm) {
+          handleDelete()
+        } else {
+          confirmDelete()
+        }
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleDelete, showConfirm])
+  }, [handleDelete, confirmDelete, showConfirm])
 
   return (
     <>
@@ -99,7 +98,12 @@ export function DeleteNoteButton({ noteId }: DeleteNoteButtonProps) {
             </TooltipTrigger>
 
             <TooltipContent side="bottom">
-              <p>Confirm delete</p>
+              <p className="flex items-center gap-1.5">
+                Confirm delete{' '}
+                <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+                  D
+                </kbd>
+              </p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>

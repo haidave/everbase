@@ -9,7 +9,7 @@ const Header = async () => {
   const { data } = await supabase.auth.getUser()
 
   return (
-    <header className="sticky top-0 z-50 h-header border-b-[0.75px] bg-['hsla(0,0%,100%,.01)'] backdrop-blur-md">
+    <header className="sticky top-0 z-50 h-header border-b-[0.75px] border-line bg-base/10 backdrop-blur">
       <div className="flex w-screen items-center justify-center">
         <nav className="w-full max-w-7xl px-8 py-4">
           <ul className="flex w-full items-center justify-between gap-8">

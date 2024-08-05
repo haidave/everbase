@@ -74,8 +74,8 @@ const Notes = () => {
       <div className="grid gap-8 pb-12 lg:gap-10">
         {Object.entries(groupedNotes).map(([date, notes]) => (
           <div key={date} className="relative">
-            <div className="flex items-center gap-2 text-sm lg:absolute lg:right-full lg:mr-10">
-              <span className="text-nowrap font-mono text-label">{formatDate(date)}</span>
+            <div className="flex items-center gap-2 font-mono text-sm lg:absolute lg:right-full lg:mr-10">
+              <span className="text-nowrap text-label">{formatDate(date)}</span>
               <span className="text-secondary">{notes.length}</span>
             </div>
             <ul className="grid gap-4 max-lg:mt-3">
@@ -130,7 +130,7 @@ const Notes = () => {
           </div>
         ))}
       </div>
-      <div ref={ref} className="-mt-8 grid place-items-center">
+      <div ref={ref} className="absolute inset-x-0 bottom-0 grid h-10 place-items-center">
         {isFetchingNextPage ? <span className="font-mono text-sm text-secondary">Loading more...</span> : null}
       </div>
     </>

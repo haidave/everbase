@@ -17,10 +17,24 @@ export async function getNotes() {
   return notes
 }
 
-export async function getGroupedNotes(): Promise<GroupedNotes> {
+export async function getGroupedNotes(
+  page: number = 1,
+  limit: number = 20
+): Promise<{ groupedNotes: GroupedNotes; count: number | null }> {
   const supabase = createClient()
 
-  const { data: notes, error } = await supabase.from('notes').select().order('created_at', { ascending: false })
+  const from = (page - 1) * limit
+  const to = from + limit - 1
+
+  const {
+    data: notes,
+    error,
+    count,
+  } = await supabase
+    .from('notes')
+    .select('*', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range(from, to)
 
   if (error) {
     throw new Error('Failed to fetch notes')
@@ -39,7 +53,7 @@ export async function getGroupedNotes(): Promise<GroupedNotes> {
     return acc
   }, {})
 
-  return groupedNotes
+  return { groupedNotes, count }
 }
 
 export async function getNote(noteId: string) {

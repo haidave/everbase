@@ -4,7 +4,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import { AddNote } from '@/modules/notes/components/add-note'
 import { Notes } from '@/modules/notes/components/notes'
 import { getGroupedNotes } from '@/modules/notes/lib/actions'
-import { QUERY_KEYS } from '@/modules/notes/lib/const'
+import { NOTES_QUERY_LIMIT, QUERY_KEYS } from '@/modules/notes/lib/const'
 
 export const metadata: Metadata = {
   title: 'Inbox',
@@ -13,9 +13,12 @@ export const metadata: Metadata = {
 const InboxPage = async () => {
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery({
+  await queryClient.prefetchInfiniteQuery({
     queryKey: QUERY_KEYS.NOTES,
-    queryFn: getGroupedNotes,
+    queryFn: async ({ pageParam }) => {
+      return getGroupedNotes(pageParam, NOTES_QUERY_LIMIT)
+    },
+    initialPageParam: 1,
   })
 
   return (

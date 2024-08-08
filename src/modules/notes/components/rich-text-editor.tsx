@@ -195,6 +195,8 @@ const RichTextEditor = ({
             ? 'pointer-events-none'
             : 'textarea-scrollbar max-h-[calc(25svh)] overflow-y-auto bg-base px-2 pt-2 font-mono leading-relaxed focus:outline-none md:max-h-[calc(75svh-4rem)]'
         )}
+        spellCheck={false}
+        autoCorrect="off"
       />
 
       {!isViewOnly && (

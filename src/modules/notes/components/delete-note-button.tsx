@@ -1,8 +1,9 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CheckIcon, Loader2Icon, TrashIcon, XIcon } from 'lucide-react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Button } from '@/modules/design-system/components/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/modules/design-system/components/tooltip'
@@ -41,23 +42,23 @@ export function DeleteNoteButton({ noteId }: DeleteNoteButtonProps) {
     setShowConfirm(false)
   }, [])
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'd' && !event.metaKey && !event.ctrlKey && !document.querySelector('[data-edit-dialog]')) {
-        event.preventDefault()
-        event.stopPropagation()
-
-        if (!showConfirm) {
-          handleDelete()
-        } else {
-          confirmDelete()
-        }
-      }
+  const handleKeyPress = useCallback(() => {
+    if (!showConfirm) {
+      handleDelete()
+    } else {
+      confirmDelete()
     }
+  }, [showConfirm, handleDelete, confirmDelete])
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleDelete, confirmDelete, showConfirm])
+  useHotkeys(
+    'd',
+    handleKeyPress,
+    {
+      enabled: () => !document.querySelector('[data-edit-dialog]'),
+      preventDefault: true,
+    },
+    [handleKeyPress]
+  )
 
   return (
     <>

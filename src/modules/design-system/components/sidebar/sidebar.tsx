@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useSidebarStore } from '@/store/sidebar-store'
 import { motion } from 'framer-motion'
 import { PanelLeftIcon } from 'lucide-react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { ROUTES } from '@/config/routes'
 import { cn } from '@/lib/utils'
@@ -22,21 +23,11 @@ const Sidebar = () => {
     toggleCollapsed()
   }, [toggleCollapsed])
 
+  useHotkeys('[', toggleSidebar, { preventDefault: true }, [toggleSidebar])
+
   useEffect(() => {
     setIsMounted(true)
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === '[') {
-        toggleSidebar()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [toggleSidebar])
+  }, [])
 
   return (
     <TooltipProvider>

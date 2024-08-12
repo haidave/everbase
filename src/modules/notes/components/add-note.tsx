@@ -1,10 +1,11 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { scrollMainToTop } from '@/lib/utils'
 import { Button } from '@/modules/design-system/components/button'
@@ -44,35 +45,31 @@ export function AddNote() {
     },
   })
 
-  const onSubmit = (data: NoteSchemaType) => {
-    if (data.content && data.content.trim() !== '') {
-      setIsSaving(true)
-      const formData = new FormData()
-      formData.append('content', data.content)
-      mutation.mutate(formData)
-    }
-  }
-
-  useEffect(() => {
-    const handleGlobalKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === 'n' &&
-        !event.metaKey &&
-        !event.ctrlKey &&
-        !isOpen &&
-        !document.querySelector('[role="dialog"]')
-      ) {
-        event.preventDefault()
-        setIsOpen(true)
+  const onSubmit = useCallback(
+    (data: NoteSchemaType) => {
+      if (data.content && data.content.trim() !== '') {
+        setIsSaving(true)
+        const formData = new FormData()
+        formData.append('content', data.content)
+        mutation.mutate(formData)
       }
-    }
+    },
+    [mutation]
+  )
 
-    window.addEventListener('keydown', handleGlobalKeyDown)
+  const openDialog = useCallback(() => {
+    setIsOpen(true)
+  }, [])
 
-    return () => {
-      window.removeEventListener('keydown', handleGlobalKeyDown)
-    }
-  }, [isOpen])
+  useHotkeys(
+    'n',
+    openDialog,
+    {
+      enabled: () => !isOpen && !document.querySelector('[role="dialog"]'),
+      preventDefault: true,
+    },
+    [isOpen, openDialog]
+  )
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
@@ -89,7 +86,7 @@ export function AddNote() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="secondary" size="icon" className="size-12 rounded-full" onClick={() => setIsOpen(true)}>
+            <Button variant="secondary" size="icon" className="size-12 rounded-full" onClick={openDialog}>
               <PlusIcon className="size-6" />
             </Button>
           </TooltipTrigger>

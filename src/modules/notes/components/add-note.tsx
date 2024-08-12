@@ -1,10 +1,11 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { scrollMainToTop } from '@/lib/utils'
 import { Button } from '@/modules/design-system/components/button'
@@ -53,26 +54,18 @@ export function AddNote() {
     }
   }
 
-  useEffect(() => {
-    const handleGlobalKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === 'n' &&
-        !event.metaKey &&
-        !event.ctrlKey &&
-        !isOpen &&
-        !document.querySelector('[role="dialog"]')
-      ) {
-        event.preventDefault()
+  useHotkeys(
+    'n',
+    () => {
+      if (!isOpen && !document.querySelector('[role="dialog"]')) {
         setIsOpen(true)
       }
+    },
+    {
+      enabled: !isOpen,
+      preventDefault: true,
     }
-
-    window.addEventListener('keydown', handleGlobalKeyDown)
-
-    return () => {
-      window.removeEventListener('keydown', handleGlobalKeyDown)
-    }
-  }, [isOpen])
+  )
 
   const handleOpenChange = useCallback(
     (open: boolean) => {

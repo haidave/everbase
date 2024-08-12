@@ -45,26 +45,30 @@ export function AddNote() {
     },
   })
 
-  const onSubmit = (data: NoteSchemaType) => {
-    if (data.content && data.content.trim() !== '') {
-      setIsSaving(true)
-      const formData = new FormData()
-      formData.append('content', data.content)
-      mutation.mutate(formData)
-    }
-  }
+  const onSubmit = useCallback(
+    (data: NoteSchemaType) => {
+      if (data.content && data.content.trim() !== '') {
+        setIsSaving(true)
+        const formData = new FormData()
+        formData.append('content', data.content)
+        mutation.mutate(formData)
+      }
+    },
+    [mutation]
+  )
+
+  const openDialog = useCallback(() => {
+    setIsOpen(true)
+  }, [])
 
   useHotkeys(
     'n',
-    () => {
-      if (!isOpen && !document.querySelector('[role="dialog"]')) {
-        setIsOpen(true)
-      }
-    },
+    openDialog,
     {
-      enabled: !isOpen,
+      enabled: () => !isOpen && !document.querySelector('[role="dialog"]'),
       preventDefault: true,
-    }
+    },
+    [isOpen, openDialog]
   )
 
   const handleOpenChange = useCallback(
@@ -82,7 +86,7 @@ export function AddNote() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="secondary" size="icon" className="size-12 rounded-full" onClick={() => setIsOpen(true)}>
+            <Button variant="secondary" size="icon" className="size-12 rounded-full" onClick={openDialog}>
               <PlusIcon className="size-6" />
             </Button>
           </TooltipTrigger>

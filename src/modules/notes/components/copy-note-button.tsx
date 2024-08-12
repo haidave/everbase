@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { CheckIcon, CopyIcon } from 'lucide-react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { Button } from '@/modules/design-system/components/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/modules/design-system/components/tooltip'
@@ -15,7 +16,6 @@ type CopyNoteButtonProps = {
 const CopyNoteButton = ({ content }: CopyNoteButtonProps) => {
   const [isCopied, setIsCopied] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
-  const buttonRef = useRef<HTMLButtonElement>(null)
 
   const editorConfig = useMemo(
     () => ({
@@ -62,28 +62,17 @@ const CopyNoteButton = ({ content }: CopyNoteButtonProps) => {
     }
   }, [isCopied])
 
-  useEffect(() => {
-    const handleGlobalKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === 'c' &&
-        !event.metaKey &&
-        !event.ctrlKey &&
-        !isCopied &&
-        !document.querySelector('[data-edit-dialog]')
-      ) {
-        event.preventDefault()
-        event.stopPropagation()
-        void handleCopyToClipboard()
-        buttonRef.current?.focus()
-      }
-    }
-
-    window.addEventListener('keydown', handleGlobalKeyDown)
-
-    return () => {
-      window.removeEventListener('keydown', handleGlobalKeyDown)
-    }
-  }, [isCopied, handleCopyToClipboard])
+  useHotkeys(
+    'c',
+    () => {
+      void handleCopyToClipboard()
+    },
+    {
+      enabled: () => !isCopied && !document.querySelector('[data-edit-dialog]'),
+      preventDefault: true,
+    },
+    [isCopied, handleCopyToClipboard]
+  )
 
   return (
     <>
@@ -96,7 +85,6 @@ const CopyNoteButton = ({ content }: CopyNoteButtonProps) => {
             variant="ghost"
             size="icon"
             onClick={handleCopyToClipboard}
-            ref={buttonRef}
             aria-label={isCopied ? 'Copied to clipboard' : 'Copy note'}
           >
             {isCopied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}

@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { PencilIcon } from 'lucide-react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { type Note } from '@/modules/api/types'
 import { Button } from '@/modules/design-system/components/button'
@@ -15,26 +16,19 @@ interface EditNoteButtonProps {
 export function EditNoteButton({ note, closePopover }: EditNoteButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
 
-  useEffect(() => {
-    const handleGlobalKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === 'e' &&
-        !event.metaKey &&
-        !event.ctrlKey &&
-        !isOpen &&
-        !document.querySelector('[data-edit-dialog]')
-      ) {
-        event.preventDefault()
-        setIsOpen(true)
-      }
-    }
+  const openEditDialog = useCallback(() => {
+    setIsOpen(true)
+  }, [])
 
-    window.addEventListener('keydown', handleGlobalKeyDown)
-
-    return () => {
-      window.removeEventListener('keydown', handleGlobalKeyDown)
-    }
-  }, [isOpen, setIsOpen])
+  useHotkeys(
+    'e',
+    openEditDialog,
+    {
+      enabled: () => !isOpen && !document.querySelector('[data-edit-dialog]'),
+      preventDefault: true,
+    },
+    [isOpen, openEditDialog]
+  )
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open)
@@ -48,7 +42,7 @@ export function EditNoteButton({ note, closePopover }: EditNoteButtonProps) {
     <>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)}>
+          <Button variant="ghost" size="icon" onClick={openEditDialog}>
             <PencilIcon className="size-4" />
           </Button>
         </TooltipTrigger>

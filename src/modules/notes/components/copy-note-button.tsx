@@ -3,6 +3,7 @@ import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import { AnimatePresence, motion } from 'framer-motion'
 import { CheckIcon, CopyIcon } from 'lucide-react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -74,6 +75,11 @@ const CopyNoteButton = ({ content }: CopyNoteButtonProps) => {
     [isCopied, handleCopyToClipboard]
   )
 
+  const variants = {
+    hidden: { opacity: 0, scale: 0.5 },
+    visible: { opacity: 1, scale: 1 },
+  }
+
   return (
     <>
       <div className="hidden">
@@ -87,7 +93,17 @@ const CopyNoteButton = ({ content }: CopyNoteButtonProps) => {
             onClick={handleCopyToClipboard}
             aria-label={isCopied ? 'Copied to clipboard' : 'Copy note'}
           >
-            {isCopied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
+            <AnimatePresence mode="wait" initial={false}>
+              {isCopied ? (
+                <motion.span key="checkmark" variants={variants} initial="hidden" animate="visible" exit="hidden">
+                  <CheckIcon className="size-4" />
+                </motion.span>
+              ) : (
+                <motion.span key="copy" variants={variants} initial="hidden" animate="visible" exit="hidden">
+                  <CopyIcon className="size-4" />
+                </motion.span>
+              )}
+            </AnimatePresence>
           </Button>
         </TooltipTrigger>
         <TooltipContent side="bottom">

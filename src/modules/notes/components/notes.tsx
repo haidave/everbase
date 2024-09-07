@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { isToday, isYesterday, parse } from 'date-fns'
 import { useInView } from 'react-intersection-observer'
 
+import { formatDate, formatTime } from '@/lib/formatters'
 import { useResize } from '@/hooks/use-resize'
 import { type GroupedNotes } from '@/modules/api/types'
 import { Popover, PopoverContent, PopoverTrigger } from '@/modules/design-system/components/popover'
@@ -58,13 +58,6 @@ const Notes = () => {
     return <p>Empty as your head. Create a note instead!</p>
   }
 
-  const formatDate = (dateString: string) => {
-    const date = parse(dateString, 'MMMM d, yyyy', new Date())
-    if (isToday(date)) return 'Today'
-    if (isYesterday(date)) return 'Yesterday'
-    return dateString
-  }
-
   const closePopover = () => {
     setOpenPopoverId(null)
   }
@@ -74,7 +67,9 @@ const Notes = () => {
       {Object.entries(groupedNotes).map(([date, notes]) => (
         <div key={date} className="relative">
           <div className="flex items-center gap-2 font-mono text-sm lg:absolute lg:right-full lg:mr-10">
-            <span className="text-nowrap text-label">{formatDate(date)}</span>
+            <time className="text-nowrap text-label" dateTime={date}>
+              {formatDate(date)}
+            </time>
             <span className="text-secondary">{notes.length}</span>
           </div>
           <ul className="grid gap-4 max-lg:mt-3">
@@ -89,6 +84,9 @@ const Notes = () => {
                   className="rounded-md text-left focus-visible:shadow-focus focus-visible:outline-0 [&[data-state='open']>li]:bg-primary"
                 >
                   <li className="relative rounded-md bg-subtle px-5 py-4 transition-all duration-150 hover:bg-primary active:bg-primary">
+                    <time dateTime={note.created_at} className="mb-1.5 flex font-mono text-xs text-label">
+                      {formatTime(note.created_at)}
+                    </time>
                     <div
                       dangerouslySetInnerHTML={{
                         __html: note.content

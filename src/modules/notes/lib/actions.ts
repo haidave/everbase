@@ -1,6 +1,7 @@
 'use server'
 
-import { format, parseISO } from 'date-fns'
+import { parseISO } from 'date-fns'
+import { formatInTimeZone } from 'date-fns-tz'
 
 import { createClient } from '@/lib/supabase/server'
 import { type GroupedNotes, type Note } from '@/modules/api/types'
@@ -40,9 +41,11 @@ export async function getGroupedNotes(
     throw new Error('Failed to fetch notes')
   }
 
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
   const groupedNotes = (notes as Note[]).reduce<GroupedNotes>((acc, note) => {
     const date = parseISO(note.created_at)
-    const formattedDate = format(date, 'MMMM d, yyyy')
+    const formattedDate = formatInTimeZone(date, userTimeZone, 'MMMM d, yyyy')
 
     if (!acc[formattedDate]) {
       acc[formattedDate] = []

@@ -1,7 +1,12 @@
-import { isToday, isYesterday, parse, parseISO } from 'date-fns'
+import { format, isToday, isYesterday, parse, parseISO } from 'date-fns'
 import { formatInTimeZone } from 'date-fns-tz'
 
 export const formatDate = (dateString: string) => {
+  // Handle special cases first
+  if (dateString === 'Today' || dateString === 'Yesterday') {
+    return dateString
+  }
+
   try {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
     let date: Date
@@ -19,13 +24,14 @@ export const formatDate = (dateString: string) => {
       return dateString // Return the original string if parsing fails
     }
 
-    if (isToday(date)) {
-      const now = new Date()
-      const currentTime = formatInTimeZone(now, userTimeZone, 'HH:mm')
-      return `Today (Current time: ${currentTime})`
+    // Convert to user's timezone
+    const zonedDate = new Date(formatInTimeZone(date, userTimeZone, "yyyy-MM-dd'T'HH:mm:ssXXX"))
+
+    if (isToday(zonedDate)) {
+      return `Today`
     }
-    if (isYesterday(date)) return 'Yesterday'
-    return dateString // Return the original formatted string
+    if (isYesterday(zonedDate)) return 'Yesterday'
+    return format(zonedDate, 'MMMM d, yyyy') // Format the date consistently
   } catch (error) {
     console.error('Error formatting date:', error)
     return dateString // Return the original string in case of any error

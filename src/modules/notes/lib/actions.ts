@@ -1,9 +1,13 @@
 'use server'
 
-import { format, parseISO } from 'date-fns'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 
+import { formatDateServer } from '@/lib/formatters'
 import { createClient } from '@/lib/supabase/server'
 import { type GroupedNotes, type Note } from '@/modules/api/types'
+
+dayjs.extend(utc)
 
 export async function getNotes() {
   const supabase = createClient()
@@ -41,8 +45,7 @@ export async function getGroupedNotes(
   }
 
   const groupedNotes = (notes as Note[]).reduce<GroupedNotes>((acc, note) => {
-    const date = parseISO(note.created_at)
-    const formattedDate = format(date, 'MMMM d, yyyy')
+    const formattedDate = formatDateServer(note.created_at)
 
     if (!acc[formattedDate]) {
       acc[formattedDate] = []

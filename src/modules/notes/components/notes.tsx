@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 
-import { formatDate, formatTime } from '@/lib/formatters'
+import { formatDateClient, formatTime } from '@/lib/formatters'
 import { useResize } from '@/hooks/use-resize'
 import { type GroupedNotes } from '@/modules/api/types'
 import { Popover, PopoverContent, PopoverTrigger } from '@/modules/design-system/components/popover'
@@ -68,7 +68,7 @@ const Notes = () => {
         <div key={date} className="relative">
           <div className="flex items-center gap-2 font-mono text-sm lg:absolute lg:right-full lg:mr-10">
             <time className="text-nowrap text-label" dateTime={date}>
-              {formatDate(date)}
+              {formatDateClient(date)}
             </time>
             <span className="text-secondary">{notes.length}</span>
           </div>

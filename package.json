@@ -43,6 +43,7 @@
     "babel-plugin-react-compiler": "^0.0.0-experimental-696af53-20240625",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
+    "date-fns-tz": "^3.1.3",
     "framer-motion": "^11.3.29",
     "geist": "^1.3.0",
     "lucide-react": "^0.376.0",

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { format, parseISO } from 'date-fns'
+import { toZonedTime } from 'date-fns-tz'
 import { useInView } from 'react-intersection-observer'
 
 import { formatDate, formatTime } from '@/lib/formatters'
@@ -30,7 +32,7 @@ const Notes = () => {
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
-      const totalNotes = Object.values(lastPage.groupedNotes).flat().length
+      const totalNotes = lastPage.notes.length
       return totalNotes === NOTES_QUERY_LIMIT ? allPages.length + 1 : undefined
     },
   })
@@ -45,11 +47,14 @@ const Notes = () => {
   if (error) return <div>An error occurred: {error.message}</div>
 
   const groupedNotes = data?.pages.reduce<GroupedNotes>((acc, page) => {
-    Object.entries(page.groupedNotes).forEach(([date, notes]) => {
-      if (!acc[date]) {
-        acc[date] = []
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    page.notes.forEach((note) => {
+      const date = toZonedTime(parseISO(note.created_at), userTimeZone)
+      const formattedDate = format(date, 'yyyy-MM-dd')
+      if (!acc[formattedDate]) {
+        acc[formattedDate] = []
       }
-      acc[date]?.push(...notes)
+      acc[formattedDate]?.push(note)
     })
     return acc
   }, {})

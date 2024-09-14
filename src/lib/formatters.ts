@@ -1,32 +1,22 @@
-import dayjs from 'dayjs'
-import isToday from 'dayjs/plugin/isToday'
-import isYesterday from 'dayjs/plugin/isYesterday'
-import timezone from 'dayjs/plugin/timezone'
-import utc from 'dayjs/plugin/utc'
+import { format, isToday, isYesterday, parse, parseISO } from 'date-fns'
 
-dayjs.extend(utc)
-dayjs.extend(timezone)
-dayjs.extend(isToday)
-dayjs.extend(isYesterday)
+export const formatDate = (dateString: string) => {
+  let date: Date
 
-export const formatDateClient = (dateString: string) => {
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-  const date = dayjs(dateString).tz(userTimeZone)
+  // Try parsing as ISO string first
+  date = parseISO(dateString)
 
-  if (date.isToday()) {
-    return 'Today'
+  // If invalid, try parsing as 'MMMM d, yyyy'
+  if (isNaN(date.getTime())) {
+    date = parse(dateString, 'MMMM d, yyyy', new Date())
   }
-  if (date.isYesterday()) {
-    return 'Yesterday'
-  }
-  return date.format('MMMM D, YYYY')
-}
 
-export const formatDateServer = (dateString: string) => {
-  return dayjs(dateString).utc().format('YYYY-MM-DD')
+  if (isToday(date)) return 'Today'
+  if (isYesterday(date)) return 'Yesterday'
+  return format(date, 'MMMM d, yyyy')
 }
 
 export const formatTime = (dateString: string) => {
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-  return dayjs(dateString).tz(userTimeZone).format('HH:mm')
+  const date = parseISO(dateString)
+  return format(date, 'HH:mm')
 }

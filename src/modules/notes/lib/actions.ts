@@ -1,5 +1,7 @@
 'use server'
 
+import { format, parseISO } from 'date-fns'
+
 import { createClient } from '@/lib/supabase/server'
 import { type GroupedNotes, type Note } from '@/modules/api/types'
 
@@ -39,11 +41,14 @@ export async function getGroupedNotes(
   }
 
   const groupedNotes = (notes as Note[]).reduce<GroupedNotes>((acc, note) => {
-    if (!acc[note.created_at]) {
-      acc[note.created_at] = []
+    const date = parseISO(note.created_at)
+    const formattedDate = format(date, 'yyyy-MM-dd')
+
+    if (!acc[formattedDate]) {
+      acc[formattedDate] = []
     }
 
-    acc[note.created_at]?.push(note)
+    acc[formattedDate]?.push(note)
 
     return acc
   }, {})

@@ -1,9 +1,7 @@
 'use server'
 
-import { format, parseISO } from 'date-fns'
-
 import { createClient } from '@/lib/supabase/server'
-import { type GroupedNotes, type Note } from '@/modules/api/types'
+import { type Note } from '@/modules/api/types'
 
 export async function getNotes() {
   const supabase = createClient()
@@ -20,7 +18,7 @@ export async function getNotes() {
 export async function getGroupedNotes(
   page: number = 1,
   limit: number = 20
-): Promise<{ groupedNotes: GroupedNotes; count: number | null }> {
+): Promise<{ notes: Note[]; count: number | null }> {
   const supabase = createClient()
 
   const from = (page - 1) * limit
@@ -40,20 +38,7 @@ export async function getGroupedNotes(
     throw new Error('Failed to fetch notes')
   }
 
-  const groupedNotes = (notes as Note[]).reduce<GroupedNotes>((acc, note) => {
-    const date = parseISO(note.created_at)
-    const formattedDate = format(date, 'yyyy-MM-dd')
-
-    if (!acc[formattedDate]) {
-      acc[formattedDate] = []
-    }
-
-    acc[formattedDate]?.push(note)
-
-    return acc
-  }, {})
-
-  return { groupedNotes, count }
+  return { notes: notes as Note[], count }
 }
 
 export async function getNote(noteId: string) {

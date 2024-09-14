@@ -1,15 +1,9 @@
-import { format, isToday, isYesterday, parse, parseISO } from 'date-fns'
+import { format, isToday, isYesterday, parseISO } from 'date-fns'
+import { toZonedTime } from 'date-fns-tz'
 
 export const formatDate = (dateString: string) => {
-  let date: Date
-
-  // Try parsing as ISO string first
-  date = parseISO(dateString)
-
-  // If invalid, try parsing as 'MMMM d, yyyy'
-  if (isNaN(date.getTime())) {
-    date = parse(dateString, 'MMMM d, yyyy', new Date())
-  }
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const date = toZonedTime(parseISO(dateString), userTimeZone)
 
   if (isToday(date)) return 'Today'
   if (isYesterday(date)) return 'Yesterday'
@@ -17,6 +11,7 @@ export const formatDate = (dateString: string) => {
 }
 
 export const formatTime = (dateString: string) => {
-  const date = parseISO(dateString)
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const date = toZonedTime(parseISO(dateString), userTimeZone)
   return format(date, 'HH:mm')
 }

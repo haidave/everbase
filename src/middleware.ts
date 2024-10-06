@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (request.nextUrl.pathname.startsWith(ROUTES.signIn) && user.data.user) {
-    return NextResponse.redirect(new URL(ROUTES.inbox, request.url))
+    return NextResponse.redirect(new URL(ROUTES.dashboard, request.url))
   }
   return response
 }

@@ -17,6 +17,7 @@ import { getGroupedNotes } from '@/modules/notes/lib/actions'
 import { NOTES_QUERY_LIMIT, QUERY_KEYS } from '../lib/const'
 import { CopyNoteButton } from './copy-note-button'
 import { EditNoteButton } from './edit-note-button'
+import { NotesSkeleton } from './notes-skeleton'
 
 const Notes = () => {
   const { width } = useResize()
@@ -43,7 +44,7 @@ const Notes = () => {
     }
   }, [inView, fetchNextPage, hasNextPage])
 
-  if (isPending) return <div>Loading...</div>
+  if (isPending) return <NotesSkeleton />
   if (error) return <div>An error occurred: {error.message}</div>
 
   const groupedNotes = data?.pages.reduce<GroupedNotes>((acc, page) => {

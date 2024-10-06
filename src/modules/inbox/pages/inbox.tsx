@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const InboxPage = () => {
   return (
-    <div className="relative mx-auto flex max-w-xl flex-col lg:w-1/2">
+    <div className="relative mx-auto flex w-full max-w-xl flex-col lg:w-1/2">
       <div className="fixed bottom-5 right-5 z-50 lg:bottom-8 lg:right-8">
         <AddNote />
       </div>

@@ -1,6 +1,8 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { useCallback } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/modules/design-system/components/tooltip'
@@ -11,15 +13,32 @@ type SidebarNavigationLinkProps = {
   href: string
   icon: NonNullable<React.ReactNode>
   label: string
+  shortcut: string
   isExternal?: boolean
   isButton?: boolean
   isCollapsed?: boolean
 }
 
-const SidebarNavigationLink = ({ href, icon, label, isExternal, isCollapsed }: SidebarNavigationLinkProps) => {
+const SidebarNavigationLink = ({
+  href,
+  icon,
+  shortcut,
+  label,
+  isExternal,
+  isCollapsed,
+}: SidebarNavigationLinkProps) => {
+  const router = useRouter()
   const pathname = usePathname()
-
   const isActive = pathname === href
+
+  const handleNavigation = useCallback(
+    (href: string) => {
+      void router.push(href)
+    },
+    [router]
+  )
+
+  useHotkeys(shortcut, () => handleNavigation(href), { enabled: !isActive, preventDefault: true })
 
   const linkContent = (
     <li
@@ -51,7 +70,14 @@ const SidebarNavigationLink = ({ href, icon, label, isExternal, isCollapsed }: S
     return (
       <Tooltip>
         <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
-        <TooltipContent side="right">{label}</TooltipContent>
+        <TooltipContent side="right">
+          <div className="flex items-center justify-between gap-2">
+            <span>{label}</span>
+            <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
+              {shortcut}
+            </kbd>
+          </div>
+        </TooltipContent>
       </Tooltip>
     )
   }

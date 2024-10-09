@@ -5,11 +5,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CheckIcon, Loader2Icon, TrashIcon, XIcon } from 'lucide-react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
+import { QUERY_KEYS } from '@/lib/const'
 import { Button } from '@/modules/design-system/components/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/modules/design-system/components/tooltip'
 import { deleteNote } from '@/modules/notes/lib/actions'
-
-import { QUERY_KEYS } from '../lib/const'
 
 interface DeleteNoteButtonProps {
   noteId: string

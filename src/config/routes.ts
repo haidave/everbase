@@ -6,7 +6,7 @@ const ROUTES = {
   tasks: '/tasks',
   projects: '/projects',
   calendar: '/calendar',
-  wishlist: '/wishlist',
+  rewards: '/rewards',
 } as const
 
 const PROTECTED_ROUTES = [
@@ -15,7 +15,7 @@ const PROTECTED_ROUTES = [
   ROUTES.tasks,
   ROUTES.projects,
   ROUTES.calendar,
-  ROUTES.wishlist,
+  ROUTES.rewards,
 ]
 
 export { ROUTES, PROTECTED_ROUTES }

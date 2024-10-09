@@ -41,9 +41,9 @@ const NAVIGATION_ITEMS = [
     shortcut: '5',
   },
   {
-    href: ROUTES.wishlist,
+    href: ROUTES.rewards,
     icon: <GiftIcon className="size-4" />,
-    label: 'Wishlist',
+    label: 'Rewards',
     shortcut: '6',
   },
 ]

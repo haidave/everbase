@@ -5,34 +5,37 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { useHotkeys } from 'react-hotkeys-hook'
 
 import { QUERY_KEYS } from '@/lib/const'
 import { scrollMainToTop } from '@/lib/utils'
+import { PROJECT_STATUSES } from '@/modules/api/types'
 import { Button } from '@/modules/design-system/components/button'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/modules/design-system/components/dialog'
 import { Form, FormControl, FormField, FormItem } from '@/modules/design-system/components/form'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modules/design-system/components/tooltip'
-import { addNote } from '@/modules/notes/lib/actions'
 
-import { noteSchema, type NoteSchemaType } from '../lib/validation'
-import { RichTextEditor } from './rich-text-editor'
+import { addProject } from '../lib/actions'
+import { projectSchema, type ProjectSchemaType } from '../lib/validation'
 
-export function AddNote() {
+export function AddProject() {
   const queryClient = useQueryClient()
   const [isOpen, setIsOpen] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
-  const form = useForm<NoteSchemaType>({
-    resolver: zodResolver(noteSchema),
+  const form = useForm<ProjectSchemaType>({
+    resolver: zodResolver(projectSchema),
+    defaultValues: {
+      name: '',
+      status: 'backlog',
+    },
   })
 
   const { control, handleSubmit, reset } = form
 
   const mutation = useMutation({
-    mutationFn: addNote,
+    mutationFn: addProject,
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: QUERY_KEYS.NOTES })
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROJECTS })
       reset()
       setIsSaving(false)
       setIsOpen(false)
@@ -46,13 +49,11 @@ export function AddNote() {
   })
 
   const onSubmit = useCallback(
-    (data: NoteSchemaType) => {
-      if (data.content && data.content.trim() !== '') {
-        setIsSaving(true)
-        const formData = new FormData()
-        formData.append('content', data.content)
-        mutation.mutate(formData)
-      }
+    (data: ProjectSchemaType) => {
+      const formData = new FormData()
+      formData.append('name', data.name)
+      formData.append('status', data.status)
+      mutation.mutate(formData)
     },
     [mutation]
   )
@@ -60,16 +61,6 @@ export function AddNote() {
   const openDialog = useCallback(() => {
     setIsOpen(true)
   }, [])
-
-  useHotkeys(
-    'n',
-    openDialog,
-    {
-      enabled: () => !isOpen && !document.querySelector('[role="dialog"]'),
-      preventDefault: true,
-    },
-    [isOpen, openDialog]
-  )
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
@@ -91,36 +82,48 @@ export function AddNote() {
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p className="flex items-center gap-1.5">
-              Create a note{' '}
-              <kbd className="pointer-events-none flex h-[1.125rem] select-none items-center rounded border border-line bg-primary-hover px-1 font-sans font-medium">
-                N
-              </kbd>
-            </p>
+            <p className="flex items-center gap-1.5">Add project </p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
 
       <DialogContent className="grid gap-2 focus:outline-none max-md:top-1/4 max-md:-translate-y-1/4 sm:max-w-3xl md:px-8">
-        <DialogTitle className="sr-only">Create new note</DialogTitle>
+        <DialogTitle className="sr-only">Add new project</DialogTitle>
         <DialogDescription className="sr-only">
-          Click save to create a new note. Press escape to cancel.
+          Click save to add a new project. Press escape to cancel.
         </DialogDescription>
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="relative max-h-[75svh]">
             <FormField
               control={control}
-              name="content"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <RichTextEditor
-                      isPending={isSaving}
-                      handleOnSubmit={() => {
-                        void handleSubmit(onSubmit)()
-                      }}
+                    <input
                       {...field}
+                      type="text"
+                      placeholder="Project name"
+                      disabled={isSaving}
+                      value={field.value || ''}
                     />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <select {...field}>
+                      {Object.values(PROJECT_STATUSES).map((status) => (
+                        <option key={status} value={status}>
+                          {status}
+                        </option>
+                      ))}
+                    </select>
                   </FormControl>
                 </FormItem>
               )}

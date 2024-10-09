@@ -3,12 +3,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 
+import { QUERY_KEYS } from '@/lib/const'
 import { type Note } from '@/modules/api/types'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/modules/design-system/components/dialog'
 import { Form, FormControl, FormField, FormItem } from '@/modules/design-system/components/form'
 import { getNote, updateNote } from '@/modules/notes/lib/actions'
 
-import { QUERY_KEYS } from '../lib/const'
 import { noteSchema, type NoteSchemaType } from '../lib/validation'
 import { RichTextEditor } from './rich-text-editor'
 

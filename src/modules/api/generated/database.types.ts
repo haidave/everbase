@@ -24,7 +24,39 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'notes_user_id_fkey'
+            foreignKeyName: 'posts_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          status: Database['public']['Enums']['project_status']
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          status?: Database['public']['Enums']['project_status']
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          status?: Database['public']['Enums']['project_status']
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'projects_user_id_fkey'
             columns: ['user_id']
             isOneToOne: false
             referencedRelation: 'users'
@@ -40,7 +72,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      project_status: 'backlog' | 'active' | 'passive' | 'completed'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -110,7 +142,6 @@ export type TablesUpdate<
     : never
 
 export type Enums<
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   PublicEnumNameOrOptions extends keyof PublicSchema['Enums'] | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']

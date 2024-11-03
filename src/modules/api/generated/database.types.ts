@@ -22,21 +22,14 @@ export type Database = {
           id?: string
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: 'posts_user_id_fkey'
-            columns: ['user_id']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
-        ]
+        Relationships: []
       }
       projects: {
         Row: {
           created_at: string
           id: string
           name: string
+          position: number | null
           status: Database['public']['Enums']['project_status']
           user_id: string
         }
@@ -44,6 +37,7 @@ export type Database = {
           created_at?: string
           id?: string
           name: string
+          position?: number | null
           status?: Database['public']['Enums']['project_status']
           user_id: string
         }
@@ -51,25 +45,28 @@ export type Database = {
           created_at?: string
           id?: string
           name?: string
+          position?: number | null
           status?: Database['public']['Enums']['project_status']
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: 'projects_user_id_fkey'
-            columns: ['user_id']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
-        ]
+        Relationships: []
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_project_position: {
+        Args: {
+          p_project_id: string
+          p_new_status: Database['public']['Enums']['project_status']
+          p_new_position: number
+          p_old_status: Database['public']['Enums']['project_status']
+          p_old_position: number
+          p_user_id: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       project_status: 'backlog' | 'active' | 'passive' | 'completed'
@@ -150,4 +147,18 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
     ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes'] | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
+    ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
     : never

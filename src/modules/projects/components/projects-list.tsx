@@ -141,8 +141,8 @@ const ProjectsList = () => {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             className={cn(
-                              'group relative rounded-lg bg-subtle px-2 py-3 text-center font-mono',
-                              snapshot.isDragging && 'border bg-primary'
+                              'group relative rounded-lg bg-subtle px-2 py-3 text-center font-mono hover:bg-primary',
+                              snapshot.isDragging && 'bg-primary-active'
                             )}
                           >
                             <span>{project.name}</span>

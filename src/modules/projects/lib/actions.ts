@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { type ProjectStatus } from '@/modules/api/types'
 
 export async function getProjects() {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: projects, error } = await supabase.from('projects').select().order('position', { ascending: true })
 
@@ -16,7 +16,7 @@ export async function getProjects() {
 }
 
 export async function getProject(projectId: string) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: project, error } = await supabase.from('projects').select('*').eq('id', projectId).single()
 
@@ -30,7 +30,7 @@ export async function getProject(projectId: string) {
 export async function addProject(formData: FormData) {
   const name = String(formData.get('name'))
   const status = String(formData.get('status')) as ProjectStatus
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const {
     data: { user },
@@ -69,7 +69,7 @@ export async function updateProject(formData: FormData) {
   const projectId = String(formData.get('projectId'))
   const name = String(formData.get('name'))
   const status = formData.get('status') as ProjectStatus
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const {
     data: { user },
@@ -85,7 +85,7 @@ export async function updateProject(formData: FormData) {
 }
 
 export async function updateProjectStatus(projectId: string, newStatus: ProjectStatus, newPosition: number) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const {
     data: { user },
@@ -119,7 +119,7 @@ export async function updateProjectStatus(projectId: string, newStatus: ProjectS
 
 export async function deleteProject(formData: FormData) {
   const projectId = String(formData.get('projectId'))
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const {
     data: { user },

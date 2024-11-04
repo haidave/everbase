@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { type Note } from '@/modules/api/types'
 
 export async function getNotes() {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: notes, error } = await supabase.from('notes').select().order('created_at', { ascending: false })
 
@@ -19,7 +19,7 @@ export async function getGroupedNotes(
   page: number = 1,
   limit: number = 20
 ): Promise<{ notes: Note[]; count: number | null }> {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const from = (page - 1) * limit
   const to = from + limit - 1
@@ -42,7 +42,7 @@ export async function getGroupedNotes(
 }
 
 export async function getNote(noteId: string) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: note, error } = await supabase.from('notes').select('*').eq('id', noteId).single()
 
@@ -55,7 +55,7 @@ export async function getNote(noteId: string) {
 
 export async function addNote(formData: FormData) {
   const content = String(formData.get('content'))
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const {
     data: { user },
@@ -73,7 +73,7 @@ export async function addNote(formData: FormData) {
 export async function updateNote(formData: FormData) {
   const noteId = String(formData.get('noteId'))
   const content = String(formData.get('content'))
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const {
     data: { user },
@@ -90,7 +90,7 @@ export async function updateNote(formData: FormData) {
 
 export async function deleteNote(formData: FormData) {
   const noteId = String(formData.get('noteId'))
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const {
     data: { user },

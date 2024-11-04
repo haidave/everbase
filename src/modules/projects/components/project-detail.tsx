@@ -141,7 +141,7 @@ export function ProjectDetail({ project, isOpen, onOpenChange }: ProjectDetailPr
                   <FormItem>
                     <FormLabel>Status</FormLabel>
                     <FormControl>
-                      <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isSaving}>
+                      <Select value={field.value} onValueChange={field.onChange} disabled={isSaving}>
                         <SelectTrigger className="capitalize">
                           <SelectValue />
                         </SelectTrigger>

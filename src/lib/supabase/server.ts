@@ -4,8 +4,8 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { env } from '@/env'
 import { type Database } from '@/modules/api/generated/database.types'
 
-export function createClient() {
-  const cookieStore = cookies()
+export async function createClient() {
+  const cookieStore = await cookies()
 
   return createServerClient<Database>(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
     cookies: {

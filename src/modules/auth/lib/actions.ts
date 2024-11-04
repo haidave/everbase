@@ -7,8 +7,8 @@ import { ROUTES } from '@/config/routes'
 import { createClient } from '@/lib/supabase/server'
 
 const handleSignIn = async () => {
-  const supabase = createClient()
-  const origin = headers().get('origin')
+  const supabase = await createClient()
+  const origin = (await headers()).get('origin')
 
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -26,7 +26,7 @@ const handleSignIn = async () => {
 }
 
 const handleSignOut = async () => {
-  const supabase = createClient()
+  const supabase = await createClient()
   await supabase.auth.signOut()
 
   return redirect(ROUTES.home)

@@ -1,21 +1,20 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { DragDropContext, Draggable, Droppable, type DropResult } from '@hello-pangea/dnd'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { QUERY_KEYS } from '@/lib/const'
 import { cn } from '@/lib/utils'
-import { PROJECT_STATUSES, type Projects, type ProjectStatus } from '@/modules/api/types'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/modules/design-system/components/tooltip'
+import { PROJECT_STATUSES, type Project, type Projects, type ProjectStatus } from '@/modules/api/types'
 
 import { getProjects, updateProjectStatus } from '../lib/actions'
 import { AddProject } from './add-project'
-import { DeleteProject } from './delete-project'
-import { EditProject } from './edit-project'
+import { ProjectDetail } from './project-detail'
 
 const ProjectsList = () => {
   const queryClient = useQueryClient()
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   const {
     data: projects = [],
@@ -140,28 +139,13 @@ const ProjectsList = () => {
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
+                            onClick={() => setSelectedProject(project)}
                             className={cn(
-                              'group relative rounded-lg bg-subtle px-2 py-3 text-center font-mono hover:bg-primary',
+                              'group relative cursor-pointer rounded-lg bg-subtle px-2 py-3 text-center font-mono hover:bg-primary',
                               snapshot.isDragging && 'bg-primary-active'
                             )}
                           >
                             <span>{project.name}</span>
-                            <div className="invisible absolute right-0 top-1/2 flex -translate-y-1/2 gap-2 bg-base group-hover:visible">
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <EditProject project={project} />
-                                  </TooltipTrigger>
-                                  <TooltipContent side="bottom">Edit project</TooltipContent>
-                                </Tooltip>
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <DeleteProject projectId={project.id} />
-                                  </TooltipTrigger>
-                                  <TooltipContent side="bottom">Delete project</TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
-                            </div>
                           </div>
                         )}
                       </Draggable>
@@ -176,6 +160,13 @@ const ProjectsList = () => {
         <div className="fixed bottom-5 right-5 z-50 lg:bottom-8 lg:right-8">
           <AddProject />
         </div>
+        {selectedProject && (
+          <ProjectDetail
+            project={selectedProject}
+            isOpen={!!selectedProject}
+            onOpenChange={(open) => !open && setSelectedProject(null)}
+          />
+        )}
       </div>
     </DragDropContext>
   )

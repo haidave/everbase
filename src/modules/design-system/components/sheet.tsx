@@ -59,7 +59,11 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
         ref={ref}
         className={cn(sheetVariants({ side }), className)}
         onOpenAutoFocus={(e) => e.preventDefault()}
-        onCloseAutoFocus={(e) => e.preventDefault()}
+        onCloseAutoFocus={(event) => {
+          event.preventDefault()
+          // Restore pointer-events when sheet closes because of bug with opened select while closing sheet
+          document.body.style.removeProperty('pointer-events')
+        }}
         {...props}
       >
         {children}

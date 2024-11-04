@@ -5,7 +5,7 @@ import { Link } from '@/modules/design-system/components/link'
 import { Button } from '../button'
 
 const Header = async () => {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data } = await supabase.auth.getUser()
 
   return (

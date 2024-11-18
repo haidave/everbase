@@ -101,7 +101,7 @@ const Notes = () => {
                           // Disable all inputs
                           .replace(/<input/g, '<input tabindex="-1"'),
                       }}
-                      className="pointer-events-none select-none whitespace-pre-wrap break-words font-mono text-sm leading-relaxed"
+                      className="max-w-xl select-none overflow-x-auto whitespace-pre-wrap break-words font-mono text-sm leading-relaxed"
                       style={{
                         wordBreak: 'break-word',
                       }}

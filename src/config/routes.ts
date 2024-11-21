@@ -10,12 +10,12 @@ const ROUTES = {
 } as const
 
 const PROTECTED_ROUTES = [
-  ROUTES.dashboard,
+  // ROUTES.dashboard,
   ROUTES.inbox,
-  ROUTES.tasks,
-  ROUTES.projects,
-  ROUTES.calendar,
-  ROUTES.rewards,
+  // ROUTES.tasks,
+  // ROUTES.projects,
+  // ROUTES.calendar,
+  // ROUTES.rewards,
 ]
 
 export { ROUTES, PROTECTED_ROUTES }

@@ -85,7 +85,7 @@ const RichTextEditor = ({
         },
         codeBlock: {
           HTMLAttributes: {
-            class: 'bg-primary p-4 text-sm rounded-md font-mono',
+            class: 'bg-primary w-full max-w-xl p-4 text-sm rounded-md font-mono',
           },
         },
       }),

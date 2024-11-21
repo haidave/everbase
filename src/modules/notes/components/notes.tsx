@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { format, parseISO } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
+import { UndoIcon } from 'lucide-react'
 import { useInView } from 'react-intersection-observer'
 
 import { NOTES_QUERY_LIMIT, QUERY_KEYS } from '@/lib/const'
@@ -61,7 +62,14 @@ const Notes = () => {
   }, {})
 
   if (!groupedNotes || Object.keys(groupedNotes).length === 0) {
-    return <p>Empty as your head. Create a note instead!</p>
+    return (
+      <div className="fixed bottom-5 right-20 z-50 lg:bottom-8 lg:right-[5.625rem]">
+        <p className="absolute -top-8 left-1/2 -translate-x-1/2 truncate font-semibold text-secondary">
+          Add your first note here!
+        </p>
+        <UndoIcon className="size-20 rotate-[-140deg] stroke-[1px] text-secondary" />
+      </div>
+    )
   }
 
   const closePopover = () => {
@@ -101,7 +109,7 @@ const Notes = () => {
                           // Disable all inputs
                           .replace(/<input/g, '<input tabindex="-1"'),
                       }}
-                      className="max-w-xl select-none overflow-x-auto whitespace-pre-wrap break-words font-mono text-sm leading-relaxed"
+                      className="select-none whitespace-pre-wrap break-words font-mono text-sm leading-relaxed"
                       style={{
                         wordBreak: 'break-word',
                       }}

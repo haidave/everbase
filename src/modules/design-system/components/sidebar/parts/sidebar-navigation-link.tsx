@@ -13,7 +13,7 @@ type SidebarNavigationLinkProps = {
   href: string
   icon: NonNullable<React.ReactNode>
   label: string
-  shortcut: string
+  shortcut?: string
   isExternal?: boolean
   isButton?: boolean
   isCollapsed?: boolean
@@ -38,7 +38,10 @@ const SidebarNavigationLink = ({
     [router]
   )
 
-  useHotkeys(shortcut, () => handleNavigation(href), { enabled: !isActive, preventDefault: true })
+  useHotkeys(shortcut ?? 'no-shortcut', () => shortcut && handleNavigation(href), {
+    enabled: !isActive && !!shortcut,
+    preventDefault: true,
+  })
 
   const linkContent = (
     <li
